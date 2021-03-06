@@ -1,16 +1,35 @@
 // NPM, add db connection and models
 const express = require('express');
-const slug = require('slug');
 const bodyParser = require('body-parser');
-const multer = require('multer');
-const upload = multer({dest: 'static/upload/'});
-const mongoose = require('mongoose');
-require('dotenv').config();
-const MongoClient = require('mongodb').MongoClient;
+
+// Use?
+const slug = require('slug');
+// const multer = require('multer');
 const assert = require('assert');
+// const upload = multer({dest: 'static/upload/'});
+const flash = require('express-flash');
+
+// Models
 const users = require('./models/users.js');
+
+// Security
+const bcrypt = require('bcrypt');
+const passport = require('passport');
+const session = require('express-session');
+const initializePassport = require('./passport-config')
+initializePassport(
+  passport,
+  username => users.find(user => user.username === username),
+  id => users.find(user => user.id === id)
+);
+
+// Connection
+require('dotenv').config();
+const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 const DBConnection = require('./connection.js');
 DBConnection(mongoose);
+
 
 const app = express();
 
@@ -26,6 +45,15 @@ express();
   app.use(express.json());
   // View map
   app.set('views', 'view');
+  // Security
+  app.use(flash())
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
   // Port to listen
   app.listen(8000);
 
@@ -34,21 +62,12 @@ express();
     res.render('login');
   });
 
-  // Login check and redirect
-  app.post('/login', async (req, res) => {
-    const userLogin = await users.findOne({
-      email: req.body.email
-    });
-    if (!userLogin) 
-      return res.status(400).send('Email not found');
-    const userPassword = await users.findOne({
-      password: req.body.password
-    });
-    if (!userPassword) 
-      return res.status(400).send('Password not correct');
-    res.redirect('test');
-  });
-
+  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+    successRedirect: '/test',
+    failureRedirect: '/login',
+    failureFlash: true,
+  }));
+ 
   // Register account
   app.get('/register', (req, res) => {
     res.render('register');
@@ -57,10 +76,11 @@ express();
   // Add account to DB en redirect to login
   app.post('/add', async (req, res) => {
     try {
+        const hash = await bcrypt.hashSync(req.body.password, 10);
         const user = new users({
             email: req.body.email,
             username: req.body.username,
-            password: req.body.password
+            password: hash 
         });
         await user.save() 
           .then(() => {res.redirect('login');});
@@ -76,10 +96,30 @@ express();
     res.render('match', {data: dataUser});
   });
 
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('login');
+  })
+
   // Error 404
   app.get('*', (req, res) => {
     res.status(404).render('not-found.ejs');
   });
+
+  function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next()
+    }
+
+    res.redirect('/login')
+  }
+  
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/')
+    }
+    next()
+  }
  
 
 
