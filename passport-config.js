@@ -7,7 +7,8 @@ const users = require ('./models/users.js');
 module.exports = (passport) => {
     passport.use(
         new LocalStrategy({ usernameField: 'username'}, (username, password, done) => {
-        users.findOne({ username: username}).then(users => {
+        users.findOne({ username: username})
+          .then(users => {
             bcrypt.compare(password, users.password, (err, isMatch) => {
                 if (isMatch) {return done(null, users);}
             });

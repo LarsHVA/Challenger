@@ -3,9 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 // Use?
-const slug = require('slug');
+// const slug = require('slug');
 // const multer = require('multer');
-const assert = require('assert');
+// const assert = require('assert');
 // const upload = multer({dest: 'static/upload/'});
 const flash = require('express-flash');
 
@@ -57,24 +57,31 @@ express();
   // Port to listen
   app.listen(8000);
 
+  // Show matching accounts
+  app.get('/', checkAuthenticated, async (req, res) => {
+    const dataUser = await users.find();
+    // console.log(dataUser);
+    res.render('match', {data: dataUser});
+  });
+
   // Login
-  app.get('/login', (req, res) => {
+  app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login');
   });
 
   app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/test',
+    successRedirect: '/',
     failureRedirect: '/login',
     failureFlash: true,
   }));
  
   // Register account
-  app.get('/register', (req, res) => {
+  app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register');
   });
 
   // Add account to DB en redirect to login
-  app.post('/add', async (req, res) => {
+  app.post('/add', checkNotAuthenticated, async (req, res) => {
     try {
         const hash = await bcrypt.hashSync(req.body.password, 10);
         const user = new users({
@@ -89,11 +96,44 @@ express();
     }
   });
 
-  // Show matching accounts
-  app.get('/match', async (req, res) => {
-    const dataUser = await users.find();
-    // console.log(dataUser);
-    res.render('match', {data: dataUser});
+   // Register account
+   app.get('/account', checkAuthenticated, (req, res) => {
+    res.render('account');
+  });
+
+  // Add account to DB en redirect to login
+  app.post('/update', checkAuthenticated, async (req, res) => {
+    try {
+        const filter = { username: req.user.username };
+        const hash = await bcrypt.hashSync(req.body.password, 10);
+        let user = await users.findOne({ 
+          username: req.user.username 
+        });
+        await users.updateOne(filter, { 
+          password: hash 
+        });
+        await user.save() 
+          .then(() => {res.redirect('match');});
+    } catch {
+        res.status(500).send();
+    }
+  });
+
+  // Check delete user
+  app.get('/delete', checkAuthenticated, (req, res) => {
+    res.render('delete');
+  });
+
+  // Delete user
+  app.post('/delete', checkAuthenticated, async (req, res) => {
+    try {
+      const user = await users.findOneAndDelete({ 
+        username: req.user.username 
+      }).exec();
+      res.redirect('login');
+    } catch (error) {
+      res.status(500).send();
+    }
   });
 
   app.get('/logout', (req, res) => {
@@ -108,17 +148,17 @@ express();
 
   function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-      return next()
+      return next();
     }
 
-    res.redirect('/login')
+    res.redirect('/login');
   }
   
   function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-      return res.redirect('/')
+      return res.redirect('/');
     }
-    next()
+    next();
   }
  
 
