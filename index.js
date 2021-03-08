@@ -2,12 +2,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Use?
-// const slug = require('slug');
-// const multer = require('multer');
-// const assert = require('assert');
-// const upload = multer({dest: 'static/upload/'});
-// const MongoClient = require('mongodb').MongoClient;
+// Use
 const flash = require('express-flash');
 
 // Models

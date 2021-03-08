@@ -26,6 +26,17 @@ i {
   font-size: 35px;
 }
 
+i.pageIcon {
+  display: table;
+  margin: 0.1em auto;
+  font-size: 75px;
+}
+
+i#togglePassword {
+  font-size: 18px;
+  margin-left: 1em;
+}
+
 input {
   border: 1px solid var(--v-black);
   border-radius: 1px;
