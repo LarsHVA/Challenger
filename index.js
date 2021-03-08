@@ -73,7 +73,7 @@ express();
   // Show matching accounts
   app.get('/', checkAuthenticated, async (req, res) => {
     const dataUser = await users.find();
-    res.render('match', {data: dataUser, nameShow: req.user.username});
+    res.render('match', {data: dataUser});
   });
 
   // Login
