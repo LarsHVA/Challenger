@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 // const multer = require('multer');
 // const assert = require('assert');
 // const upload = multer({dest: 'static/upload/'});
+// const MongoClient = require('mongodb').MongoClient;
 const flash = require('express-flash');
 
 // Models
@@ -22,11 +23,23 @@ initializePassport(
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
 );
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+function checkNotAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
+}
 
 // Connection
 require('dotenv').config();
 const mongoose = require('mongoose');
-const MongoClient = require('mongodb').MongoClient;
 const DBConnection = require('./connection.js');
 DBConnection(mongoose);
 
@@ -60,8 +73,7 @@ express();
   // Show matching accounts
   app.get('/', checkAuthenticated, async (req, res) => {
     const dataUser = await users.find();
-    // console.log(dataUser);
-    res.render('match', {data: dataUser});
+    res.render('match', {data: dataUser, nameShow: req.user.username});
   });
 
   // Login
@@ -87,11 +99,16 @@ express();
         const user = new users({
             email: req.body.email,
             username: req.body.username,
+            console: req.body.console,
+            game: req.body.game,
+            tell: req.body.tell,
+            info: req.body.info,
             password: hash 
         });
         await user.save() 
           .then(() => {res.redirect('login');});
-    } catch {
+    } catch(err) {
+        console.log(err);
         res.status(500).send();
     }
   });
@@ -113,15 +130,11 @@ express();
           password: hash 
         });
         await user.save() 
-          .then(() => {res.redirect('match');});
-    } catch {
+          .then(() => {res.redirect('account');});
+    } catch(err) {
+        console.log(err);
         res.status(500).send();
     }
-  });
-
-  // Check delete user
-  app.get('/delete', checkAuthenticated, (req, res) => {
-    res.render('delete');
   });
 
   // Delete user
@@ -131,11 +144,13 @@ express();
         username: req.user.username 
       }).exec();
       res.redirect('login');
-    } catch (error) {
+    } catch(err) {
+      console.log(err);
       res.status(500).send();
     }
   });
 
+  // Logout
   app.get('/logout', (req, res) => {
     req.logout();
     res.redirect('login');
@@ -146,20 +161,7 @@ express();
     res.status(404).render('not-found.ejs');
   });
 
-  function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
-
-    res.redirect('/login');
-  }
   
-  function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return res.redirect('/');
-    }
-    next();
-  }
  
 
 

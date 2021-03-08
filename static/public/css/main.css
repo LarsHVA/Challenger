@@ -1,3 +1,148 @@
-*{
-    color: blue;
+/* Project tech - Lars Kamman */
+
+@import "./reset.css";
+
+:root {
+  --v-black: black;
+  --v-white: white;
+
+  --v-font: 'Roboto', sans-serif;
+}
+
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--v-white);
+  font-family: var(--v-font);
+  margin: 1em 10% 0 10%;
+}
+
+i {
+  font-size: 35px;
+}
+
+input {
+  border: 1px solid black;
+  border-radius: 1px;
+  height: 30px;
+  width: 100%;
+  margin: 1em 0;
+}
+
+button {
+  width: 100%;
+  height: 40px;
+  font-size: 16px;
+  color: white;
+  background-color: black;
+}
+
+h1 {
+  font-family: var(--v-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  margin: 10px 0;
+}
+
+h2 {
+  font-family: var(--v-font);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+h3 {
+  font-family: var(--v-font);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+p {
+  font-family: var(--v-font);
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  text-decoration-line: underline;
+}
+
+a:link {
+  display: inline-block;
+  margin: 1em 0;
+}
+
+a[href^="tel:"] {
+  margin: unset;
+}
+
+span {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Nav */
+ul.navigation {
+  display: flex;
+  align-items: center;
+}
+
+ul.navigation li + li{
+  margin-left: .5em;
+}
+
+ul.navigation li:nth-of-type(2) {
+  margin-right: auto;
+}
+
+/* Match */
+ul.match {
+  margin: 1em 0;
+}
+
+ul.match li {
+  margin-left: 1em;
+  margin-top: 0.1em;
+}
+
+ul.match li.items {
+  margin-left: 3em;
+}
+
+ul.match li i,
+ul.match li ul li i {
+  font-size: 30px;
+  width: 45px;
+  text-align: center;
+}
+
+ul.match li span,
+ul.match li ul li span {
+  font-size: 18px;
+}
+
+footer{
+  margin-top: 0.5em;
 }
