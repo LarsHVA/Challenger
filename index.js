@@ -38,7 +38,6 @@ const mongoose = require('mongoose');
 const DBConnection = require('./connection.js');
 DBConnection(mongoose);
 
-
 const app = express();
 
 express();
@@ -62,8 +61,10 @@ express();
   }));
   app.use(passport.initialize());
   app.use(passport.session());
-  // Port to listen
-  app.listen(8000);
+   // Port to listen
+  const port = process.env.PORT || 8000;
+  app.listen(port);
+  // app.listen(8000);
 
   // Show matching accounts
   app.get('/', checkAuthenticated, async (req, res) => {
