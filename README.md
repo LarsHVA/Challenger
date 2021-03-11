@@ -1,8 +1,6 @@
-# Project-tech
+# RetroMatch
 
-Back-end / Front-end / Project tech: Matching app
-
-## RetroMatch
+![Wireframe eerste versie](https://github.com/LarsHVA/project-tech/blob/main/doc/Group%202.png?raw=true)
 
 retroMatch is a matching app that helps users to find people who like an (old) game that is no longer popular / available, has online support or helps search companions (perhaps new friends).
 
