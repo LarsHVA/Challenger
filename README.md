@@ -6,6 +6,24 @@ retroMatch is a matching app that helps users to find people who like an (old) g
 
 ## Installation
 
+### Pre install
+
+- [NodeJS](https://nodejs.org/en/)
+- [Git](https://git-scm.com/)
+
+### Make account
+
+- [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+
+#### Documentation
+
+- [NodeJS](https://nodejs.org/en/docs/)
+- [Git](https://git-scm.com/docs)
+- [MongoDB Atlas](https://docs.atlas.mongodb.com/getting-started/)
+
+### App install
+
+Run the following code in your terminal.
 ![Installation](https://github.com/LarsHVA/project-tech/blob/main/doc/cloneProject.png?raw=true)
 
 Make a `.env` file with:
@@ -14,6 +32,16 @@ Make a `.env` file with:
 URI = //URI of MongoDB
 SESSION_SECRET = //Random key
 ```
+
+### Create Database
+
+```js
+Database: Project;
+Collection: users;
+```
+
+When the setup is complete
+run `npm start` in the terminal.
 
 ## DOCS
 
