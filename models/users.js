@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 require('../connection.js')
 
 const UserSchema = new mongoose.Schema({
+    storedAvaGamer: String,
     email: {type: String, required: true, unique: true},
     username: {type: String, required: true, unique: true},
     console: {type: String, required: false},
