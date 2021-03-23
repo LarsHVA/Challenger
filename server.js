@@ -20,28 +20,29 @@ const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./passport-config')
 initializePassport(
-	passport,
-	username => users.find(user => user.username === username),
-	id => users.find(user => user.id === id)
+  passport,
+  username => users.find(user => user.username === username),
+  id => users.find(user => user.id === id)
 );
 function checkAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.redirect('/login');
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return res.redirect('/');
-	}
-	next();
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
 }
 
 // Connection
 require('dotenv').config();
 const mongoose = require('mongoose');
 const DBConnection = require('./connection.js');
+// eslint-disable-next-line no-unused-vars
 const { SSL_OP_NO_TICKET } = require('constants');
 DBConnection(mongoose);
 
@@ -68,114 +69,114 @@ app.set('views', 'view');
 // Security
 app.use(flash())
 app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // Show matching accounts
 app.get('/', checkAuthenticated, async (req, res) => {
-	const dataUser = await users.find();
-	res.render('match', {data: dataUser});
+  const dataUser = await users.find();
+  res.render('match', {data: dataUser});
 });
 
 // Login
 app.get('/login', checkNotAuthenticated, (req, res) => {
-	res.render('login');
+  res.render('login');
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/login',
-	failureFlash: true,
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
 }));
  
 // Register account
 app.get('/register', checkNotAuthenticated, (req, res) => {
-	res.render('register');
+  res.render('register');
 });
 
 // Add account to DB en redirect to login
 app.post('/add', checkNotAuthenticated, async (req, res) => {
-	try {
-		const hash = await bcrypt.hashSync(req.body.password, 10);
-		const user = new users({
-			email: req.body.email,
-			username: req.body.username,
-			console: req.body.console,
-			game: req.body.game,
-			tell: req.body.tell,
-			info: req.body.info,
-			password: hash 
-		});
-		await user.save() 
-			.then(() => {res.redirect('login');});
-	} catch(err) {
-		console.log(err);
-		res.status(500).send();
-	}
+  try {
+    const hash = await bcrypt.hashSync(req.body.password, 10);
+    const user = new users({
+      email: req.body.email,
+      username: req.body.username,
+      console: req.body.console,
+      game: req.body.game,
+      tell: req.body.tell,
+      info: req.body.info,
+      password: hash 
+    });
+    await user.save() 
+      .then(() => {res.redirect('login');});
+  } catch(err) {
+    console.log(err);
+    res.status(500).send();
+  }
 });
 
 // Register account
 app.get('/account', checkAuthenticated, (req, res) => {
-	res.render('account');
+  res.render('account');
 });
 
 // Add account to DB en redirect to login
 app.post('/update', checkAuthenticated, async (req, res) => {
-	try {
-		const filter = { username: req.user.username };
-		const hash = await bcrypt.hashSync(req.body.password, 10);
-		let user = await users.findOne({ 
-			username: req.user.username 
-		});
-		await users.updateOne(filter, { 
-			password: hash 
-		});
-		await user.save() 
-			.then(() => {res.redirect('account');});
-	} catch(err) {
-		console.log(err);
-		res.status(500).send();
-	}
+  try {
+    const filter = { username: req.user.username };
+    const hash = await bcrypt.hashSync(req.body.password, 10);
+    let user = await users.findOne({ 
+      username: req.user.username 
+    });
+    await users.updateOne(filter, { 
+      password: hash 
+    });
+    await user.save() 
+      .then(() => {res.redirect('account');});
+  } catch(err) {
+    console.log(err);
+    res.status(500).send();
+  }
 });
 
 // Delete user
 app.post('/delete', checkAuthenticated, async (req, res) => {
-	try {
-		await users.findOneAndDelete({ 
-			username: req.user.username 
-		}).exec();
-		res.redirect('login');
-	} catch(err) {
-		console.log(err);
-		res.status(500).send();
-	}
+  try {
+    await users.findOneAndDelete({ 
+      username: req.user.username 
+    }).exec();
+    res.redirect('login');
+  } catch(err) {
+    console.log(err);
+    res.status(500).send();
+  }
 });
 
 // Logout
 app.get('/logout', (req, res) => {
-	req.logout();
-	res.redirect('login');
+  req.logout();
+  res.redirect('login');
 })
 // Socket.io integration
 io.on('connection', socket => {
-	socket.on('Chat', (msg) => {
-		io.emit('message', msg)
-	})
+  socket.on('Chat', (msg) => {
+    io.emit('message', msg)
+  })
 });
 
 // Chatpage
 app.get('/chat', async (req, res) => {
-	const dataUser = await users.find();
-	res.render('chat', {data: dataUser});
+  const dataUser = await users.find();
+  res.render('chat', {data: dataUser});
 });
 
 // Error 404
 app.get('*', (req, res) => {
-	res.status(404).render('not-found.ejs');
+  res.status(404).render('not-found.ejs');
 });
 
   
