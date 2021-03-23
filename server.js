@@ -2,6 +2,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+//bring in socket.io
+const socketio = require('socket.io');
+
+// Port to listen
+const port = process.env.PORT || 8000;
+
 // Use
 const flash = require('express-flash');
 
@@ -14,22 +20,22 @@ const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./passport-config')
 initializePassport(
-  passport,
-  username => users.find(user => user.username === username),
-  id => users.find(user => user.id === id)
+	passport,
+	username => users.find(user => user.username === username),
+	id => users.find(user => user.id === id)
 );
 function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  next();
+	if (req.isAuthenticated()) {
+		return res.redirect('/');
+	}
+	next();
 }
 
 // Connection
@@ -40,122 +46,134 @@ DBConnection(mongoose);
 
 const app = express();
 
+// Setting up socket.io
+const server = require('http').createServer(app);
+const io = socketio(server)
+
 express();
-  // EJS
-  app.set('view engine', 'ejs');
-  // Express body parser
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({extended: true}));
-  // Static > public folder
-  app.use(express.static('./static/public'));
-  // output JSON
-  app.use(express.json());
-  // View map
-  app.set('views', 'view');
-  // Security
-  app.use(flash())
-  app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-   // Port to listen
-  const port = process.env.PORT || 8000;
-  app.listen(port);
-  // app.listen(8000);
+// setup server
+server.listen(port);
+// EJS
+app.set('view engine', 'ejs');
+// Express body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+// Static > public folder
+app.use(express.static('./static/public'));
+// output JSON
+app.use(express.json());
+// View map
+app.set('views', 'view');
+// Security
+app.use(flash())
+app.use(session({
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-  // Show matching accounts
-  app.get('/', checkAuthenticated, async (req, res) => {
-    const dataUser = await users.find();
-    res.render('match', {data: dataUser});
-  });
+// Show matching accounts
+app.get('/', checkAuthenticated, async (req, res) => {
+	const dataUser = await users.find();
+	res.render('match', {data: dataUser});
+});
 
-  // Login
-  app.get('/login', checkNotAuthenticated, (req, res) => {
-    res.render('login');
-  });
+// Login
+app.get('/login', checkNotAuthenticated, (req, res) => {
+	res.render('login');
+});
 
-  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true,
-  }));
+app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
+	successRedirect: '/',
+	failureRedirect: '/login',
+	failureFlash: true,
+}));
  
-  // Register account
-  app.get('/register', checkNotAuthenticated, (req, res) => {
-    res.render('register');
-  });
+// Register account
+app.get('/register', checkNotAuthenticated, (req, res) => {
+	res.render('register');
+});
 
-  // Add account to DB en redirect to login
-  app.post('/add', checkNotAuthenticated, async (req, res) => {
-    try {
-        const hash = await bcrypt.hashSync(req.body.password, 10);
-        const user = new users({
-            email: req.body.email,
-            username: req.body.username,
-            console: req.body.console,
-            game: req.body.game,
-            tell: req.body.tell,
-            info: req.body.info,
-            password: hash 
-        });
-        await user.save() 
-          .then(() => {res.redirect('login');});
-    } catch(err) {
-        console.log(err);
-        res.status(500).send();
-    }
-  });
+// Add account to DB en redirect to login
+app.post('/add', checkNotAuthenticated, async (req, res) => {
+	try {
+		const hash = await bcrypt.hashSync(req.body.password, 10);
+		const user = new users({
+			email: req.body.email,
+			username: req.body.username,
+			console: req.body.console,
+			game: req.body.game,
+			tell: req.body.tell,
+			info: req.body.info,
+			password: hash 
+		});
+		await user.save() 
+			.then(() => {res.redirect('login');});
+	} catch(err) {
+		console.log(err);
+		res.status(500).send();
+	}
+});
 
-   // Register account
-   app.get('/account', checkAuthenticated, (req, res) => {
-    res.render('account');
-  });
+// Register account
+app.get('/account', checkAuthenticated, (req, res) => {
+	res.render('account');
+});
 
-  // Add account to DB en redirect to login
-  app.post('/update', checkAuthenticated, async (req, res) => {
-    try {
-        const filter = { username: req.user.username };
-        const hash = await bcrypt.hashSync(req.body.password, 10);
-        let user = await users.findOne({ 
-          username: req.user.username 
-        });
-        await users.updateOne(filter, { 
-          password: hash 
-        });
-        await user.save() 
-          .then(() => {res.redirect('account');});
-    } catch(err) {
-        console.log(err);
-        res.status(500).send();
-    }
-  });
+// Add account to DB en redirect to login
+app.post('/update', checkAuthenticated, async (req, res) => {
+	try {
+		const filter = { username: req.user.username };
+		const hash = await bcrypt.hashSync(req.body.password, 10);
+		let user = await users.findOne({ 
+			username: req.user.username 
+		});
+		await users.updateOne(filter, { 
+			password: hash 
+		});
+		await user.save() 
+			.then(() => {res.redirect('account');});
+	} catch(err) {
+		console.log(err);
+		res.status(500).send();
+	}
+});
 
-  // Delete user
-  app.post('/delete', checkAuthenticated, async (req, res) => {
-    try {
-      const user = await users.findOneAndDelete({ 
-        username: req.user.username 
-      }).exec();
-      res.redirect('login');
-    } catch(err) {
-      console.log(err);
-      res.status(500).send();
-    }
-  });
+// Delete user
+app.post('/delete', checkAuthenticated, async (req, res) => {
+	try {
+		const user = await users.findOneAndDelete({ 
+			username: req.user.username 
+		}).exec();
+		res.redirect('login');
+	} catch(err) {
+		console.log(err);
+		res.status(500).send();
+	}
+});
 
-  // Logout
-  app.get('/logout', (req, res) => {
-    req.logout();
-    res.redirect('login');
-  })
+// Logout
+app.get('/logout', (req, res) => {
+	req.logout();
+	res.redirect('login');
+})
+// Socket.io integration
+io.on('connection', socket => {
+	console.log('new connection')
+});
 
-  // Error 404
-  app.get('*', (req, res) => {
-    res.status(404).render('not-found.ejs');
-  });
+// Chatpage
+app.get('/chat', checkAuthenticated, async (req, res) => {
+	const dataUser = await users.find();
+	res.render('chat', {data: dataUser});
+});
+
+// Error 404
+app.get('*', (req, res) => {
+	res.status(404).render('not-found.ejs');
+});
 
   
  

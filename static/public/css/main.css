@@ -6,7 +6,7 @@
   --v-black: black;
   --v-white: white;
 
-  --v-font: 'Roboto', sans-serif;
+  --v-font: "Roboto", sans-serif;
 }
 
 *::after,
@@ -120,8 +120,8 @@ ul.navigation {
   align-items: center;
 }
 
-ul.navigation li + li{
-  margin-left: .5em;
+ul.navigation li + li {
+  margin-left: 0.5em;
 }
 
 ul.navigation li:nth-of-type(2) {
@@ -131,6 +131,15 @@ ul.navigation li:nth-of-type(2) {
 /* Match */
 ul.match {
   margin: 1em 0;
+}
+
+ul.chat {
+  display: flex;
+  flex-direction: row;
+}
+
+ul.chat li {
+  margin-right: 0.65em;
 }
 
 ul.match li {
@@ -154,6 +163,10 @@ ul.match li ul li span {
   font-size: 18px;
 }
 
-footer{
+.messages {
+  width: 90%;
+}
+
+footer {
   margin-top: 0.5em;
 }

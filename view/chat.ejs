@@ -1,0 +1,21 @@
+<%- include ("./partials/head") %>
+    <h1> Jouw chats</h1>
+    <navigation class="users">
+        <ul class="chat">
+            <% for (var index = 0; index < data.length; index++) { %>
+                <li>
+                    <i class="fas fa-user-circle"></i>
+                    <span><%= data[index].username %></span>
+                </li>
+            <% } %>
+        </ul>
+    </navigation>
+    <section class="messages">
+        <form action="">
+            <input type="text">
+            <button> Verstuur</button>
+        </form>
+    </section>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../js/socket.js"></script>
+<%- include ("./partials/footer") %>
