@@ -42,6 +42,7 @@ function checkNotAuthenticated(req, res, next) {
 require('dotenv').config();
 const mongoose = require('mongoose');
 const DBConnection = require('./connection.js');
+const { SSL_OP_NO_TICKET } = require('constants');
 DBConnection(mongoose);
 
 const app = express();
@@ -144,7 +145,7 @@ app.post('/update', checkAuthenticated, async (req, res) => {
 // Delete user
 app.post('/delete', checkAuthenticated, async (req, res) => {
 	try {
-		const user = await users.findOneAndDelete({ 
+		await users.findOneAndDelete({ 
 			username: req.user.username 
 		}).exec();
 		res.redirect('login');
@@ -161,11 +162,13 @@ app.get('/logout', (req, res) => {
 })
 // Socket.io integration
 io.on('connection', socket => {
-	console.log('new connection')
+	socket.on('Chat', (msg) => {
+		io.emit('message', msg)
+	})
 });
 
 // Chatpage
-app.get('/chat', checkAuthenticated, async (req, res) => {
+app.get('/chat', async (req, res) => {
 	const dataUser = await users.find();
 	res.render('chat', {data: dataUser});
 });
