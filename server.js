@@ -82,7 +82,7 @@ express();
     failureRedirect: '/login',
     failureFlash: true,
   }));
- 
+
   // Register account
   app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register');
@@ -99,9 +99,9 @@ express();
             game: req.body.game,
             tell: req.body.tell,
             info: req.body.info,
-            password: hash 
+            password: hash
         });
-        await user.save() 
+        await user.save()
           .then(() => {res.redirect('login');});
     } catch(err) {
         console.log(err);
@@ -119,13 +119,13 @@ express();
     try {
         const filter = { username: req.user.username };
         const hash = await bcrypt.hashSync(req.body.password, 10);
-        let user = await users.findOne({ 
-          username: req.user.username 
+        let user = await users.findOne({
+          username: req.user.username
         });
-        await users.updateOne(filter, { 
-          password: hash 
+        await users.updateOne(filter, {
+          password: hash
         });
-        await user.save() 
+        await user.save()
           .then(() => {res.redirect('account');});
     } catch(err) {
         console.log(err);
@@ -133,11 +133,20 @@ express();
     }
   });
 
+  // Display users with console nintendo on one page
+app.get('/nintendo' , async (req , res) => {
+  const dataNintendo = await users.find({console: 'nintendo'});
+  res.render('match', {data: dataNintendo});
+});
+
+
+
+
   // Delete user
   app.post('/delete', checkAuthenticated, async (req, res) => {
     try {
-      const user = await users.findOneAndDelete({ 
-        username: req.user.username 
+      const user = await users.findOneAndDelete({
+        username: req.user.username
       }).exec();
       res.redirect('login');
     } catch(err) {
@@ -156,10 +165,3 @@ express();
   app.get('*', (req, res) => {
     res.status(404).render('not-found.ejs');
   });
-
-  
- 
-
-
-
- 
