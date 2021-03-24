@@ -26,6 +26,12 @@
           <i class="fas fa-info"></i>
           <span><%= data[index].info %></span>
         </li>
+        <li>
+          <form method="POST" action="/challenge">
+            <input type="hidden" name="email" value="<%= data[index].email %>">
+            <button type="submit">uitdagen</button>
+          </form>
+        </li>
       </ul>
     </li>
   </ul>
