@@ -1,11 +1,11 @@
 <%- include ("./partials/head") %>
-  <h1>Matches</h1>
+  <h1>Challengers</h1>
 
   <% for (var index = 0; index < data.length; index++) { %>
 
   <ul class="match">
     <li>
-      <i class="fas fa-user-circle"></i>
+      <img src=<%= data[index].storedAvaGamer %> alt="Gamer Avatar">
       <span><%= data[index].username %></span>
     </li>
     <li class="items">
@@ -25,6 +25,12 @@
         <li>
           <i class="fas fa-info"></i>
           <span><%= data[index].info %></span>
+        </li>
+        <li>
+          <form method="POST" action="/challenge">
+            <input type="hidden" name="email" value="<%= data[index].email %>">
+            <button type="submit">uitdagen</button>
+          </form>
         </li>
       </ul>
     </li>
