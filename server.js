@@ -2,8 +2,16 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+
 // IGDB games API // by Deiver
 const axios = require('axios');
+
+//bring in socket.io
+const socketio = require('socket.io');
+
+// Port to listen
+const port = process.env.PORT || 8000;
+
 
 // Use
 const flash = require('express-flash');
@@ -17,22 +25,22 @@ const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./passport-config')
 initializePassport(
-  passport,
-  username => users.find(user => user.username === username),
-  id => users.find(user => user.id === id)
+	passport,
+	username => users.find(user => user.username === username),
+	id => users.find(user => user.id === id)
 );
 function checkAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/login');
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect('/');
-  }
-  next();
+	if (req.isAuthenticated()) {
+		return res.redirect('/');
+	}
+	next();
 }
 // files uploaden // by Deiver
 const multer = require("multer");
@@ -56,11 +64,17 @@ const upload = multer({ storage: storage });
 require('dotenv').config();
 const mongoose = require('mongoose');
 const DBConnection = require('./connection.js');
+const { SSL_OP_NO_TICKET } = require('constants');
 DBConnection(mongoose);
 
 const app = express();
 
+// Setting up socket.io
+const server = require('http').createServer(app);
+const io = socketio(server)
+
 express();
+
   // EJS
   app.set('view engine', 'ejs');
   // Express body parser
@@ -216,7 +230,23 @@ app.get('/games', (req,res)=> {
     res.redirect('login');
   })
 
-  // Error 404
-  app.get('*', (req, res) => {
-    res.status(404).render('not-found.ejs');
-  });
+
+
+// Socket.io integration
+io.on('connection', socket => {
+	socket.on('Chat', (msg) => {
+		io.emit('message', msg)
+	})
+});
+
+// Chatpage
+app.get('/chat', async (req, res) => {
+	const dataUser = await users.find();
+	res.render('chat', {data: dataUser});
+});
+
+// Error 404
+app.get('*', (req, res) => {
+	res.status(404).render('not-found.ejs');
+});
+
