@@ -1,24 +1,27 @@
 // NPM, add db connection and models
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
-
-
-// IGDB games API // by Deiver
-const axios = require('axios');
-
-//bring in socket.io
-const socketio = require('socket.io');
 
 // Port to listen
 const port = process.env.PORT || 8000;
-const date = require('date-fns');
+
+// Connection
+require('dotenv').config();
+const mongoose = require('mongoose');
+const DBConnection = require('./connection.js');
+const { SSL_OP_NO_TICKET } = require('constants');
+DBConnection(mongoose);
+
+// Models
+const users = require('./models/users.js');
 
 // Use
 const flash = require('express-flash');
 const nodemailer = require('nodemailer');
-
-// Models
-const users = require('./models/users.js');
+const date = require('date-fns');
+const axios = require('axios');
+const socketio = require('socket.io');
 
 // Security
 const bcrypt = require('bcrypt');
@@ -44,10 +47,8 @@ function checkNotAuthenticated(req, res, next) {
   next();
 }
 
-// files uploaden // by Deiver
+// files uploaden
 const multer = require("multer");
-
-//Hieronder wordt de storage gedefineerd en hoe de naam moet worden gegenereerd
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./static/public/uploads/");
@@ -56,21 +57,8 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
   },
 });
-
-// Met deze variable kan multer gebruiken om de geuploade bestanden een bepaalde naam moet krijgen.
+// Geuploade bestanden naam toekennen.
 const upload = multer({ storage: storage });
-
-///{ END }///
-
-// Connection
-require('dotenv').config();
-const mongoose = require('mongoose');
-const DBConnection = require('./connection.js');
-// eslint-disable-next-line no-unused-vars
-const { SSL_OP_NO_TICKET } = require('constants');
-DBConnection(mongoose);
-
-const app = express();
 
 // Setting up socket.io
 const server = require('http').createServer(app);
@@ -153,8 +141,7 @@ app.post('/challenge', async (req, res) => {
   }
 });
 
-// **DEIVER**
-///GAME NAMES///
+// Game names
 const getData = axios({
   url: "https://api.igdb.com/v4/games",
   method: 'POST',
@@ -163,14 +150,10 @@ const getData = axios({
     'Client-ID': process.env.TWITCH_CLIENT_ID,
     'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
   },
-
-  data:'fields name, id; where rating > 70 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1269387203; sort name asc; limit 100;' //1553384003
-    
+  data:'fields name, id; where rating > 70 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1269387203; sort name asc; limit 100;' //1553384003 
 })
 
 app.get('/games', (req, res) => {
-
-  // res.send('hello');
   getData
     .then(response => {
       console.log(response.data);
@@ -181,9 +164,6 @@ app.get('/games', (req, res) => {
     });
 });
 
-
-
-// **DEIVER**
 // Register account
 app.get('/register', checkNotAuthenticated, (req, res) => {
   // **DEIVER**
@@ -195,7 +175,6 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
     .catch(err => {
       console.error(err);
     });
-  // **DEIVER**
 });
 
 // Add account to DB en redirect to login
@@ -248,41 +227,10 @@ app.post('/update', checkAuthenticated, async (req, res) => {
 });
 
 // Display users with same console on one page
-app.get('/nintendo', async (req, res) => {
-  const dataNintendo = await users.find({console: 'nintendo'});
-  res.render('match', {data: dataNintendo});
+app.get('/console/:console', async (req, res) => {
+  const data = await users.find({console: req.params.console });
+  res.render('match', {data: data});
 });
-
-app.get('/playstation', async (req, res) => {
-  const dataPlaystation = await users.find({console: 'playstation'});
-  res.render('match', {data: dataPlaystation});
-});
-
-app.get('/xbox', async (req, res) => {
-  const dataXbox = await users.find({console: 'xbox'});
-  res.render('match', {data: dataXbox});
-});
-
-app.get('/wii', async (req, res) => {
-  const dataWii = await users.find({console: 'nintendo wii'});
-  res.render('match', {data: dataWii});
-});
-
-app.get('/switch', async (req, res) => {
-  const dataSwitch = await users.find({console: 'nintendo switch'});
-  res.render('match', {data: dataSwitch});
-});
-
-app.get('/gamecube', async (req, res) => {
-  const dataGamecube = await users.find({console: 'nintendo game cube'});
-  res.render('match', {data: dataGamecube});
-});
-
-// // route parameters with matching ids
-// app.get('/:id', (req, res) => {
-//   console.log(req.params)
-// })
-
 
 // Delete user
 app.post('/delete', checkAuthenticated, async (req, res) => {
@@ -303,8 +251,6 @@ app.get('/logout', (req, res) => {
   res.redirect('login');
 })
 
-
-
 // Socket.io integration
 io.on('connection', socket => {
   socket.on('Chat', (msg) => {
@@ -312,12 +258,12 @@ io.on('connection', socket => {
   })
 });
 
-
 // Save logged in user to session
 function saveLocal (req, res, next){
   res.locals.user = req.user || null;
   next();
 }
+
 // Chatpage
 app.get('/:username/chat', checkAuthenticated, async (req, res) => {
   const dataUser = await users.find({_id: {$nin: res.locals.user.id}});

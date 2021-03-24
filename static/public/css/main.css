@@ -3,6 +3,10 @@
 :root {
   --v-black: black;
   --v-white: white;
+  --v-darkBlue: #112F41;
+  --v-green: #068587;
+
+  --v-background: #EBECEE;
 
   --v-font: "Roboto", sans-serif;
 }
@@ -15,9 +19,18 @@
 }
 
 body {
-  background-color: var(--v-white);
+  background-color: var(--v-background);
   font-family: var(--v-font);
   margin: 1em 10% 0 10%;
+}
+
+.bodyNotLogin {
+  background-color: var(--v-darkBlue);
+  color: var(--v-white);
+}
+
+.bodyNotLogin i {
+  color: var(--v-white);
 }
 
 i {
@@ -35,21 +48,58 @@ i#togglePassword {
   margin-left: 1em;
 }
 
+label {
+  display: block;
+}
+
 input,
 select {
-  border: 1px solid var(--v-black);
-  border-radius: 1px;
-  height: 30px;
-  width: 100%;
+  border-radius: 2px;
+  height: 34px;
+  min-width: 300px;
+  max-width: 300px;
   margin: 1em 0;
+  padding: 0;
+  border-width: 2px;
+  bord
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload {
+  background-color: var(--v-white);
+  display: flex;
+  border-radius: 1px;
+  height: 34px;
+  max-width: 300px;
+  margin: 1em 0;
+  color: var(--v-black);
+  align-items: center;
+  justify-content: center;
+}
+
+.flexEye {
+  display: flex;
+}
+
+.flexEye label{
+  display: unset;
+}
+
+i.fas.fa-file-upload.inputStyle {
+  color: var(--v-black);
+  font-size: 25px;
 }
 
 button {
   width: 100%;
+  max-width: 300px;
   height: 40px;
   font-size: 16px;
   color: var(--v-white);
-  background-color: var(--v-black);
+  background-color: var(--v-green);
 }
 
 h1 {
@@ -143,7 +193,7 @@ ul.chat li {
 
 ul.match li {
   margin-left: 1em;
-  margin-top: 0.1em;
+  margin-top: 0.3em;
 }
 
 ul.match li.items {
@@ -162,7 +212,10 @@ ul.match li ul li span {
   font-size: 18px;
 }
 
-/* /Register Page - by Deiver/ */
+ul.match div {
+  border-left: 1px solid;
+}
+
 span#imageSpace {
   display: flex;
   justify-content: center;
@@ -172,7 +225,6 @@ img.ava-prvu {
   width: 15%;
 }
 
-/* Progressive Enhancement */
 .border-green {
   border: solid #adf218;
   color: #adf218;
@@ -194,9 +246,9 @@ img.ava-prvu {
   text-transform: uppercase;
 }
 
-.hide {
+/* .hide {
   display: none;
-}
+} */
 .show {
   display: block;
 }
@@ -223,6 +275,30 @@ img.ava-prvu {
   display: flex;
   position: absolute;
   bottom: -5em;
+}
+
+li.flexUser {
+  display: flex;
+  align-items: center;
+}
+
+li.flexUser span {
+  margin-left: 1em;
+}
+
+img.avatar {
+  width: 40px;
+  border-radius: 50px;
+  border: 1px solid;
+}
+
+.tags a:link {
+  display: inline-block;
+  margin: 5px;
+}
+
+.tags i {
+  font-size: 20px;
 }
 
 footer {

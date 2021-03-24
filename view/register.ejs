@@ -6,9 +6,13 @@
 
     <form method="POST" action="/add" enctype="multipart/form-data">
         
-        <label for="gamerAva" >
-            <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
+        <label for="gamerAva"  class="file-upload">
+            <i class="fas fa-file-upload inputStyle"></i>
+            <span>
+                Upload profiel foto
+            </span> 
         </label>
+        <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
 
         <label for="email">Email</label>
         <input type="email" name="email" id="email" required>
@@ -16,24 +20,22 @@
         <label for="username">Gebruikersnaam</label>
         <input type="text" name="username" id="username" required>
 
-        <label for="password">Wachtwoord</label><i class="far fa-eye" id="togglePassword"></i>
+        <div class="flexEye">
+        <label for="password">Wachtwoord</label>
+        <i class="far fa-eye" id="togglePassword"></i>
+        </div>
         <input type="password" name="password" id="changePassword" required>
-        <br><br>
+
         <label for="console">Console</label>
         <input type="text" name="console" id="console">
 
-        <!-- Code Deiver -->
-        <label for="game">Kies uit:
+        <label for="game">Kies uit:</label>
             <select id="game" name="game" required="">
                 <option value="" selected="">Voorbeeld Game... </option>
-
                 <% for(var i=0; i < gameNames.length; i++) { %>
                 <option><%= gameNames[i].name %></option>
                 <% } %>
-
             </select>
-        </label>
-        <!-- End -->
 
         <!-- <label for="tell">Telefoon nummer</label>
         <input type="tel" name="tell" id="tell"> -->
@@ -45,7 +47,5 @@
         <span id="massage" class="hide" ></span>
     </form>
 
-    <span>
-        <a href="/login">Login</a>
-    </span>
+    <a href="/login">Login</a>
 <%- include ("./partials/footer") %>

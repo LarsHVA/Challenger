@@ -177,5 +177,5 @@ function checkAll(){
 
 function makeImgtag(){
     const spanImage = document.getElementById("imageSpace");
-    spanImage.innerHTML = '<img class="ava-prvu" src="./assets/images/user-astronaut-solid.svg" id="avatarPreview" alt="Avatar preview">';
+    spanImage.innerHTML = '<i class="fas fa-user-astronaut pageIcon"></i>';
 }

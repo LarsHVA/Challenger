@@ -1,39 +1,68 @@
 <%- include ("./partials/head") %>
   <h1>Challengers</h1>
 
+  <div class="tags">
+    <a href="/console/gamecube">
+      <i class="fas fa-tag"></i>
+      <span>Gamecube</span>
+    </a>
+    <a href="/console/wii">
+      <i class="fas fa-tag"></i>
+      <span>Wii</span>
+    </a>
+    <a href="/console/switch">
+      <i class="fas fa-tag"></i>
+      <span>Switch</span>
+    </a>
+    <a href="/console/wii">
+      <i class="fas fa-tag"></i>
+      <span>Wii</span>
+    </a>
+    <a href="/console/xbox">
+      <i class="fas fa-tag"></i>
+      <span>Xbox</span>
+    </a>
+    <a href="/console/playstation">
+      <i class="fas fa-tag"></i>
+      <span>Playstation</span>
+    </a>
+  </div>
+
   <% for (var index = 0; index < data.length; index++) { %>
 
   <ul class="match">
-    <li>
-      <img src=<%= data[index].storedAvaGamer %> alt="Gamer Avatar">
-      <span><%= data[index].username %></span>
-    </li>
-    <li class="items">
-      <ul>
-        <li>
-          <i class="fas fa-gamepad"></i>
-          <span><%= data[index].console %></span>
-        </li>
-        <li>
-          <i class="fas fa-ghost"></i>
-          <span><%= data[index].game %></span>
-        </li>
-        <li>
-          <i class="fas fa-headset"></i>
-          <a href="tel:<%= data[index].tell %>"><%= data[index].tell %></a>
-        </li>
-        <li>
-          <i class="fas fa-info"></i>
-          <span><%= data[index].info %></span>
-        </li>
-        <li>
-          <form method="POST" action="/challenge">
-            <input type="hidden" name="email" value="<%= data[index].email %>">
-            <button type="submit">uitdagen</button>
-          </form>
-        </li>
-      </ul>
-    </li>
+    <div>
+      <li class="flexUser">
+        <img class="avatar" src=<%= data[index].storedAvaGamer %> alt="Gamer Avatar">
+        <span><%= data[index].username %></span>
+      </li>
+      <li class="items">
+        <ul>
+          <li>
+            <i class="fas fa-gamepad"></i>
+            <span><%= data[index].console %></span>
+          </li>
+          <li>
+            <i class="fas fa-ghost"></i>
+            <span><%= data[index].game %></span>
+          </li>
+          <!-- <li>
+            <i class="fas fa-headset"></i>
+            <a href="tel:<%= data[index].tell %>"><%= data[index].tell %></a>
+          </li> -->
+          <li>
+            <i class="fas fa-info"></i>
+            <span><%= data[index].info %></span>
+          </li>
+          <li>
+            <form method="POST" action="/challenge">
+              <input type="hidden" name="email" value="<%= data[index].email %>">
+              <button type="submit">uitdagen</button>
+            </form>
+          </li>
+        </ul>
+      </li>
+    </div>
   </ul>
   <% } %>
 <%- include ("./partials/footer") %>
