@@ -164,15 +164,27 @@ ul.match li ul li span {
 }
 
 .messages-container {
+  position: relative;
   margin-top: 0.5em;
   background-color: grey;
   padding: 0.3em;
+}
+
+.messages-container .messages {
+  height: 60vh;
+  overflow-y: auto;
 }
 
 .messages-container .messages .message {
   background-color: white;
   padding: 0.5em;
   margin: 0.5em 0 0.5em 0;
+}
+
+.message-input {
+  display: flex;
+  position: absolute;
+  bottom: -5em;
 }
 
 footer {

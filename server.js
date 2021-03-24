@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 //bring in socket.io
 const socketio = require('socket.io');
 
+//Date formatting
+const date = require('date-fns');
+
 // Port to listen
 const port = process.env.PORT || 8000;
 
@@ -75,6 +78,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('*', saveLocal);
 
 // Show matching accounts
 app.get('/', checkAuthenticated, async (req, res) => {
@@ -161,18 +165,33 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('login');
 })
+
 // Socket.io integration
 io.on('connection', socket => {
   socket.on('Chat', (msg) => {
-    io.emit('message', msg)
+    io.emit('message', formatMsg('user', msg))
   })
 });
 
+
+// Save logged in user to session
+function saveLocal (req, res, next){
+  res.locals.user = req.user || null;
+  next();
+}
 // Chatpage
-app.get('/chat', async (req, res) => {
-  const dataUser = await users.find();
+app.get('/:username/chat', checkAuthenticated, async (req, res) => {
+  const dataUser = await users.find({_id: {$nin: res.locals.user.id}});
   res.render('chat', {data: dataUser});
 });
+
+function formatMsg(username, message){
+  return {
+    username: username,
+    message: message,
+    time: date.format(new Date(), "kk:mm")
+  }
+}
 
 // Error 404
 app.get('*', (req, res) => {
