@@ -1,9 +1,15 @@
 <%- include ("./partials/head2") %>
-    <i class="fas fa-user-astronaut pageIcon"></i>   
+    <span id="imageSpace">
+        <i class="fas fa-user-astronaut pageIcon"></i>   
+    </span>
     <h1>Registreer</h1>
 
-    <form method="POST" action="/add">
+    <form method="POST" action="/add" enctype="multipart/form-data">
         
+        <label for="gamerAva" >
+            <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
+        </label>
+
         <label for="email">Email</label>
         <input type="email" name="email" id="email" required>
 
@@ -12,22 +18,31 @@
 
         <label for="password">Wachtwoord</label><i class="far fa-eye" id="togglePassword"></i>
         <input type="password" name="password" id="changePassword" required>
-        
-
+        <br><br>
         <label for="console">Console</label>
         <input type="text" name="console" id="console">
 
-        <label for="game">Game</label>
-        <input type="text" name="game" id="game">
+        <!-- Code Deiver -->
+        <label for="game">Kies uit:
+            <select id="game" name="game" required="">
+                <option value="" selected="">Voorbeeld Game... </option>
 
-        <label for="tell">Telefoon nummer</label>
-        <input type="tel" name="tell" id="tell">
+                <% for(var i=0; i < gameNames.length; i++) { %>
+                <option><%= gameNames[i].name %></option>
+                <% } %>
+
+            </select>
+        </label>
+        <!-- End -->
+
+        <!-- <label for="tell">Telefoon nummer</label>
+        <input type="tel" name="tell" id="tell"> -->
         
         <label for="info">Vertel iets over je zelf</label>
         <input type="text" name="info" id="info">
 
-        <button type="submit">Register</button>
-
+        <button type="submit" id="extraCheck">Register</button>
+        <span id="massage" class="hide" ></span>
     </form>
 
     <span>
