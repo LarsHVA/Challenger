@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 // Use
 const flash = require('express-flash');
+const nodemailer = require('nodemailer');
 
 // Models
 const users = require('./models/users.js');
@@ -151,6 +152,41 @@ express();
     req.logout();
     res.redirect('login');
   })
+
+  // Mail when challenged user
+  app.post('/challenge', async (req, res) => {
+    try {
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.MAIL,
+          pass: process.env.PASSWOORDMAIL
+        }
+      });
+      
+      const text = "U bent uitgedaagt door " + req.user.username;
+
+      const mailOptions = {
+        from: process.env.MAIL,
+        to: req.user.email,
+        subject: 'U bent uitgedaagt',
+        text: text
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
+      res.redirect('../login');
+    } catch(err) {
+      console.log(err);
+      res.status(500).send();
+    }
+  });
 
   // Error 404
   app.get('*', (req, res) => {
