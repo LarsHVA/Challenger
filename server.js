@@ -133,13 +133,41 @@ express();
     }
   });
 
-  // Display users with console nintendo on one page
+  // Display users with same console on one page
 app.get('/nintendo' , async (req , res) => {
   const dataNintendo = await users.find({console: 'nintendo'});
   res.render('match', {data: dataNintendo});
 });
 
+app.get('/playstation' , async (req , res) => {
+  const dataPlaystation = await users.find({console: 'playstation'});
+  res.render('match', {data: dataPlaystation});
+});
 
+app.get('/xbox' , async (req , res) => {
+  const dataXbox = await users.find({console: 'xbox'});
+  res.render('match', {data: dataXbox});
+});
+
+app.get('/wii' , async (req , res) => {
+  const dataWii = await users.find({console: 'nintendo wii'});
+  res.render('match', {data: dataWii});
+});
+
+app.get('/switch' , async (req , res) => {
+  const dataSwitch = await users.find({console: 'nintendo switch'});
+  res.render('match', {data: dataSwitch});
+});
+
+app.get('/gamecube' , async (req , res) => {
+  const dataGamecube = await users.find({console: 'nintendo game cube'});
+  res.render('match', {data: dataGamecube});
+});
+
+// // route parameters with matching ids
+// app.get('/:id', (req, res) => {
+//   console.log(req.params)
+// })
 
 
   // Delete user
