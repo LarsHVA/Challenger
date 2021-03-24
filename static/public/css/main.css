@@ -1,5 +1,3 @@
-/* Project tech - Lars Kamman */
-
 @import "./reset.css";
 
 :root {
@@ -37,7 +35,8 @@ i#togglePassword {
   margin-left: 1em;
 }
 
-input, select {
+input,
+select {
   border: 1px solid var(--v-black);
   border-radius: 1px;
   height: 30px;
@@ -163,12 +162,6 @@ ul.match li ul li span {
   font-size: 18px;
 }
 
-.messages-container {
-  margin-top: 0.5em;
-
-}
-
-
 /* /Register Page - by Deiver/ */
 span#imageSpace {
   display: flex;
@@ -179,42 +172,45 @@ img.ava-prvu {
   width: 15%;
 }
 
-
 /* Progressive Enhancement */
-.border-green{
-	border: solid #adf218;
-	color: #adf218;
-	transition: 0.3s;
-    
+.border-green {
+  border: solid #adf218;
+  color: #adf218;
+  transition: 0.3s;
 }
 
 .border-red {
-    border: solid #ff3b52;
-    color: #ff3b52;
-	transition: 0.3s;
+  border: solid #ff3b52;
+  color: #ff3b52;
+  transition: 0.3s;
 }
-
 
 .yellow {
-	color: #fcff3b;
-	text-transform: uppercase;
+  color: #fcff3b;
+  text-transform: uppercase;
 }
-.green{
-	color: #adf218;
-	text-transform: uppercase;
-}
-
-.hide{
-	display: none;
-}
-.show{
-	display: block;
+.green {
+  color: #adf218;
+  text-transform: uppercase;
 }
 
-/* /end/ */
+.hide {
+  display: none;
+}
+.show {
+  display: block;
+}
 
+.messages-container {
+  position: relative;
+  margin-top: 0.5em;
   background-color: grey;
   padding: 0.3em;
+}
+
+.messages-container .messages {
+  height: 60vh;
+  overflow-y: auto;
 }
 
 .messages-container .messages .message {
@@ -223,7 +219,12 @@ img.ava-prvu {
   margin: 0.5em 0 0.5em 0;
 }
 
+.message-input {
+  display: flex;
+  position: absolute;
+  bottom: -5em;
+}
+
 footer {
   margin-top: 0.5em;
 }
-

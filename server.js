@@ -11,7 +11,7 @@ const socketio = require('socket.io');
 
 // Port to listen
 const port = process.env.PORT || 8000;
-
+const date = require('date-fns');
 
 // Use
 const flash = require('express-flash');
@@ -26,22 +26,22 @@ const passport = require('passport');
 const session = require('express-session');
 const initializePassport = require('./passport-config')
 initializePassport(
-	passport,
-	username => users.find(user => user.username === username),
-	id => users.find(user => user.id === id)
+  passport,
+  username => users.find(user => user.username === username),
+  id => users.find(user => user.id === id)
 );
 function checkAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return next();
-	}
-	res.redirect('/login');
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
 }
 
 function checkNotAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) {
-		return res.redirect('/');
-	}
-	next();
+  if (req.isAuthenticated()) {
+    return res.redirect('/');
+  }
+  next();
 }
 
 // files uploaden // by Deiver
@@ -49,12 +49,12 @@ const multer = require("multer");
 
 //Hieronder wordt de storage gedefineerd en hoe de naam moet worden gegenereerd
 const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, "./static/public/uploads/");
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
-	},
+  destination: function (req, file, cb) {
+    cb(null, "./static/public/uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + "-" + file.originalname);
+  },
 });
 
 // Met deze variable kan multer gebruiken om de geuploade bestanden een bepaalde naam moet krijgen.
@@ -66,6 +66,7 @@ const upload = multer({ storage: storage });
 require('dotenv').config();
 const mongoose = require('mongoose');
 const DBConnection = require('./connection.js');
+// eslint-disable-next-line no-unused-vars
 const { SSL_OP_NO_TICKET } = require('constants');
 DBConnection(mongoose);
 
@@ -93,28 +94,28 @@ app.set('views', 'view');
 // Security
 app.use(flash())
 app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use('*', saveLocal);
 // Show matching accounts
 app.get('/', checkAuthenticated, async (req, res) => {
-	const dataUser = await users.find();
-	res.render('match', {data: dataUser});
+  const dataUser = await users.find();
+  res.render('match', {data: dataUser});
 });
 
 // Login
 app.get('/login', checkNotAuthenticated, (req, res) => {
-	res.render('login');
+  res.render('login');
 });
 
 app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-	successRedirect: '/',
-	failureRedirect: '/login',
-	failureFlash: true,
+  successRedirect: '/',
+  failureRedirect: '/login',
+  failureFlash: true,
 }));
 
 // Mail when challenged user
@@ -152,31 +153,31 @@ app.post('/challenge', async (req, res) => {
   }
 });
 
-  // **DEIVER**
-  ///GAME NAMES///
-  const getData = axios({
-    url: "https://api.igdb.com/v4/games",
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Client-ID': process.env.TWITCH_CLIENT_ID,
-        'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
-    },
+// **DEIVER**
+///GAME NAMES///
+const getData = axios({
+  url: "https://api.igdb.com/v4/games",
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Client-ID': process.env.TWITCH_CLIENT_ID,
+    'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
+  },
 
-    data:'fields name, id; where rating > 70 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1269387203; sort name asc; limit 100;' //1553384003
+  data:'fields name, id; where rating > 70 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1269387203; sort name asc; limit 100;' //1553384003
     
-  })
+})
 
-app.get('/games', (req,res)=> {
+app.get('/games', (req, res) => {
 
   // res.send('hello');
-    getData
+  getData
     .then(response => {
-        console.log(response.data);
-        res.send(response.data);
+      console.log(response.data);
+      res.send(response.data);
     })
     .catch(err => {
-        console.error(err);
+      console.error(err);
     });
 });
 
@@ -187,92 +188,92 @@ app.get('/games', (req,res)=> {
 app.get('/register', checkNotAuthenticated, (req, res) => {
   // **DEIVER**
   getData
-  .then(igDb => {
-    let igdbData = igDb.data;
-    res.render('register', {gameNames: igdbData});
-  })
-  .catch(err => {
+    .then(igDb => {
+      let igdbData = igDb.data;
+      res.render('register', {gameNames: igdbData});
+    })
+    .catch(err => {
       console.error(err);
-  });
+    });
   // **DEIVER**
 });
 
 // Add account to DB en redirect to login
 app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, res) => {
   try {
-      const hash = await bcrypt.hashSync(req.body.password, 10);
-      const user = new users({
-          //file-upload by Deiver
-          storedAvaGamer: './uploads/' + req.file.filename,
-          email: req.body.email,
-          username: req.body.username,
-          console: req.body.console,
-          game: req.body.game,
-          tell: req.body.tell,
-          info: req.body.info,
-          password: hash 
+    const hash = await bcrypt.hashSync(req.body.password, 10);
+    const user = new users({
+      //file-upload by Deiver
+      storedAvaGamer: './uploads/' + req.file.filename,
+      email: req.body.email,
+      username: req.body.username,
+      console: req.body.console,
+      game: req.body.game,
+      tell: req.body.tell,
+      info: req.body.info,
+      password: hash 
+    });
+    await user.save() 
+      .then(() => {
+        res.redirect('login');
       });
-      await user.save() 
-        .then(() => {
-          res.redirect('login');
-        });
   } catch(err) {
-      console.log(err);
-      res.status(500).send();
+    console.log(err);
+    res.status(500).send();
   }
 });
 
- // Register account
-  app.get('/account', checkAuthenticated, (req, res) => {
+// Register account
+app.get('/account', checkAuthenticated, (req, res) => {
   res.render('account');
 });
 
 // Add account to DB en redirect to login
 app.post('/update', checkAuthenticated, async (req, res) => {
   try {
-      const filter = { username: req.user.username };
-      const hash = await bcrypt.hashSync(req.body.password, 10);
-      let user = await users.findOne({ 
-        username: req.user.username 
-      });
-      await users.updateOne(filter, { 
-        password: hash 
-      });
-      await user.save() 
-        .then(() => {res.redirect('account');});
+    const filter = { username: req.user.username };
+    const hash = await bcrypt.hashSync(req.body.password, 10);
+    let user = await users.findOne({ 
+      username: req.user.username 
+    });
+    await users.updateOne(filter, { 
+      password: hash 
+    });
+    await user.save() 
+      .then(() => {res.redirect('account');});
   } catch(err) {
-      console.log(err);
-      res.status(500).send();
+    console.log(err);
+    res.status(500).send();
   }
 });
 
- // Display users with same console on one page
-app.get('/nintendo' , async (req , res) => {
+// Display users with same console on one page
+app.get('/nintendo', async (req, res) => {
   const dataNintendo = await users.find({console: 'nintendo'});
   res.render('match', {data: dataNintendo});
 });
 
-app.get('/playstation' , async (req , res) => {
+app.get('/playstation', async (req, res) => {
   const dataPlaystation = await users.find({console: 'playstation'});
   res.render('match', {data: dataPlaystation});
 });
 
-app.get('/xbox' , async (req , res) => {
+app.get('/xbox', async (req, res) => {
   const dataXbox = await users.find({console: 'xbox'});
   res.render('match', {data: dataXbox});
 });
 
-app.get('/wii' , async (req , res) => {
+app.get('/wii', async (req, res) => {
   const dataWii = await users.find({console: 'nintendo wii'});
   res.render('match', {data: dataWii});
 });
 
-app.get('/switch' , async (req , res) => {
+app.get('/switch', async (req, res) => {
   const dataSwitch = await users.find({console: 'nintendo switch'});
   res.render('match', {data: dataSwitch});
 });
 
-app.get('/gamecube' , async (req , res) => {
+app.get('/gamecube', async (req, res) => {
   const dataGamecube = await users.find({console: 'nintendo game cube'});
   res.render('match', {data: dataGamecube});
 });
@@ -286,7 +287,7 @@ app.get('/gamecube' , async (req , res) => {
 // Delete user
 app.post('/delete', checkAuthenticated, async (req, res) => {
   try {
-    const user = await users.findOneAndDelete({ 
+    await users.findOneAndDelete({ 
       username: req.user.username 
     }).exec();
     res.redirect('login');
@@ -306,18 +307,32 @@ app.get('/logout', (req, res) => {
 
 // Socket.io integration
 io.on('connection', socket => {
-	socket.on('Chat', (msg) => {
-		io.emit('message', msg)
-	})
+  socket.on('Chat', (msg) => {
+    io.emit('message', formatMsg('user', msg))
+  })
 });
 
+
+// Save logged in user to session
+function saveLocal (req, res, next){
+  res.locals.user = req.user || null;
+  next();
+}
 // Chatpage
-app.get('/chat', async (req, res) => {
-	const dataUser = await users.find();
-	res.render('chat', {data: dataUser});
+app.get('/:username/chat', checkAuthenticated, async (req, res) => {
+  const dataUser = await users.find({_id: {$nin: res.locals.user.id}});
+  res.render('chat', {data: dataUser});
 });
+
+function formatMsg(username, message){
+  return {
+    username: username,
+    message: message,
+    time: date.format(new Date(), "kk:mm")
+  }
+}
 
 // Error 404
 app.get('*', (req, res) => {
-	res.status(404).render('not-found.ejs');
+  res.status(404).render('not-found.ejs');
 });
