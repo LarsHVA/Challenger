@@ -157,3 +157,48 @@ ul.match li ul li span {
 footer{
   margin-top: 0.5em;
 }
+
+
+/* /Register Page - by Deiver/ */
+span#imageSpace {
+  display: flex;
+  justify-content: center;
+}
+
+img.ava-prvu {
+  width: 15%;
+}
+
+
+/* Progressive Enhancement */
+.border-green{
+	border: solid #adf218;
+	color: #adf218;
+	transition: 0.3s;
+    
+}
+
+.border-red {
+    border: solid #ff3b52;
+    color: #ff3b52;
+	transition: 0.3s;
+}
+
+
+.yellow {
+	color: #fcff3b;
+	text-transform: uppercase;
+}
+.green{
+	color: #adf218;
+	text-transform: uppercase;
+}
+
+.hide{
+	display: none;
+}
+.show{
+	display: block;
+}
+
+/* /end/ */

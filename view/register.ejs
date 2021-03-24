@@ -1,5 +1,7 @@
 <%- include ("./partials/head2") %>
-    <i class="fas fa-user-astronaut pageIcon"></i>   
+    <span id="imageSpace">
+        <i class="fas fa-user-astronaut pageIcon"></i>   
+    </span>
     <h1>Registreer</h1>
 
     <form method="POST" action="/add" enctype="multipart/form-data">
@@ -33,14 +35,14 @@
         </label>
         <!-- End -->
 
-        <label for="tell">Telefoon nummer</label>
-        <input type="tel" name="tell" id="tell">
+        <!-- <label for="tell">Telefoon nummer</label>
+        <input type="tel" name="tell" id="tell"> -->
         
         <label for="info">Vertel iets over je zelf</label>
         <input type="text" name="info" id="info">
 
-        <button type="submit">Register</button>
-
+        <button type="submit" id="extraCheck">Register</button>
+        <span id="massage" class="hide" ></span>
     </form>
 
     <span>

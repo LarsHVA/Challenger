@@ -2,14 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// IGDB games API
-const igdb = require('igdb-api-node').default;
-
-const apicalypse = require('apicalypse');
-
+// IGDB games API // by Deiver
 const axios = require('axios');
-
-
 
 // Use
 const flash = require('express-flash');
@@ -40,7 +34,7 @@ function checkNotAuthenticated(req, res, next) {
   }
   next();
 }
-///{ DEIVER }///
+// files uploaden // by Deiver
 const multer = require("multer");
 
 //Hieronder wordt de storage gedefineerd en hoe de naam moet worden gegenereerd
@@ -110,8 +104,6 @@ express();
   }));
 
   // **DEIVER**
-
-  // const client = igdb(process.env.TWITCH_CLIENT_ID, process.env.TWITCH_APP_ACCESS_TOKEN)
   ///GAME NAMES///
   const getData = axios({
     url: "https://api.igdb.com/v4/games",
