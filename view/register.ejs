@@ -5,7 +5,7 @@
     <form method="POST" action="/add" enctype="multipart/form-data">
         
         <label for="gamerAva" >
-        <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
+            <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
         </label>
 
         <label for="email">Email</label>
@@ -17,7 +17,20 @@
         <label for="password">Wachtwoord</label><i class="far fa-eye" id="togglePassword"></i>
         <input type="password" name="password" id="changePassword" required>
         
+        <!-- Code Deiver -->
 
+        <label for="games">Kies uit:
+            <select id="games" name="game" required="">
+                <option value="" selected="">Voorbeeld Game... </option>
+
+                <% for(var i=0; i < gameNames.length; i++) { %>
+                <option><%= gameNames[i].name %></option>
+                <% } %>
+                
+            </select>
+        </label>
+        <!-- End -->
+        <br><br>
         <label for="console">Console</label>
         <input type="text" name="console" id="console">
 
