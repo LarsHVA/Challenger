@@ -16,26 +16,22 @@
 
         <label for="password">Wachtwoord</label><i class="far fa-eye" id="togglePassword"></i>
         <input type="password" name="password" id="changePassword" required>
-        
-        <!-- Code Deiver -->
+        <br><br>
+        <label for="console">Console</label>
+        <input type="text" name="console" id="console">
 
-        <label for="games">Kies uit:
-            <select id="games" name="game" required="">
+        <!-- Code Deiver -->
+        <label for="game">Kies uit:
+            <select id="game" name="game" required="">
                 <option value="" selected="">Voorbeeld Game... </option>
 
                 <% for(var i=0; i < gameNames.length; i++) { %>
                 <option><%= gameNames[i].name %></option>
                 <% } %>
-                
+
             </select>
         </label>
         <!-- End -->
-        <br><br>
-        <label for="console">Console</label>
-        <input type="text" name="console" id="console">
-
-        <label for="game">Game</label>
-        <input type="text" name="game" id="game">
 
         <label for="tell">Telefoon nummer</label>
         <input type="tel" name="tell" id="tell">

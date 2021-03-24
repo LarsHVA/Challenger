@@ -37,7 +37,7 @@ i#togglePassword {
   margin-left: 1em;
 }
 
-input {
+input, select {
   border: 1px solid var(--v-black);
   border-radius: 1px;
   height: 30px;
