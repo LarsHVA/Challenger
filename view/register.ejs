@@ -6,7 +6,7 @@
 
     <form method="POST" action="/add" enctype="multipart/form-data">
         
-        <label for="gamerAva"  class="file-upload">
+        <label for="gamerAva" id="btnUpImg" class="file-upload">
             <i class="fas fa-file-upload inputStyle"></i>
             <span>
                 Upload profiel foto
@@ -15,10 +15,10 @@
         <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
 
         <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <input type="email" name="email" id="email" placeholder="voorbeeld@mail.com" required>
 
         <label for="username">Gebruikersnaam</label>
-        <input type="text" name="username" id="username" required>
+        <input type="text" name="username" id="username" placeholder="Voorbeeld Naam" required>
 
         <div class="flexEye">
         <label for="password">Wachtwoord</label>
@@ -27,7 +27,16 @@
         <input type="password" name="password" id="changePassword" required>
 
         <label for="console">Console</label>
-        <input type="text" name="console" id="console">
+            <select id="console" name="console"  required="">
+                <option value="" selected="">Kies je Console... </option>
+                <option>Gamecube</option>
+                <option>Wii</option>
+                <option>Switch</option>
+                <option>Wii</option>
+                <option>Xbox</option>
+                <option>Playstation</option>
+            </select>
+
 
         <label for="game">Kies uit:</label>
             <select id="game" name="game" required="">
@@ -41,7 +50,7 @@
         <input type="tel" name="tell" id="tell"> -->
         
         <label for="info">Vertel iets over je zelf</label>
-        <input type="text" name="info" id="info">
+        <input type="text" name="info" id="info" placeholder="Ik kan goed...">
 
         <button type="submit" id="extraCheck">Register</button>
         <span id="massage" class="hide" ></span>

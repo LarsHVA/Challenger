@@ -3,6 +3,7 @@ makeImgtag();
 
 //iputs
 const inputImg = document.getElementById('gamerAva');
+const btnUpImg = document.getElementById('btnUpImg');
 const inputName = document.getElementById('username');
 const inputGame = document.getElementById('game');
 const inputMainChar = document.getElementById('console');
@@ -34,12 +35,16 @@ function upImg() {
             imgTag.classList.add("border-red");
             inputImg.classList.remove("border-green");
             inputImg.classList.add("border-red");
+            btnUpImg.classList.remove("border-green");
+            btnUpImg.classList.add("border-red");
             goodCheck()
         } else{
             imgTag.classList.remove("border-red");
             imgTag.classList.add("border-green");
             inputImg.classList.remove("border-red");
             inputImg.classList.add("border-green");
+            btnUpImg.classList.remove("border-red");
+            btnUpImg.classList.add("border-green");
             goodCheck()
     }
 }
@@ -55,6 +60,8 @@ function deleteImg() {
         imgTag.classList.add("border-red");
         inputImg.classList.remove("border-green");
         inputImg.classList.add("border-red");
+        btnUpImg.classList.remove("border-green");
+        btnUpImg.classList.add("border-red");
     } 
     if(inputImg.accept.includes('image/*')){
 
@@ -67,7 +74,7 @@ function deleteImg() {
 function check(){
 
 
-    if(inputName.value.length > 4){
+    if(inputName.value.length > 2){
         inputName.classList.remove('border-red');
         inputName.classList.add('border-green');
         goodCheck()
@@ -122,7 +129,7 @@ const save = document.getElementById('extraCheck');
 
     
 function goodCheck(){
-    if(document.getElementsByClassName('border-green').length == 5){
+    if(document.getElementsByClassName('border-green').length == 6){
         save.classList.remove('no-click');
         save.classList.remove('purple-bg');
         save.classList.add('show');
@@ -134,7 +141,7 @@ function goodCheck(){
     } else{
         checkAll()
     }
-    if(document.getElementsByClassName('border-green').length < 5){
+    if(document.getElementsByClassName('border-green').length < 6){
         save.classList.add('hide');   
     }
     
@@ -144,7 +151,7 @@ function goodCheck(){
 
 function checkAll(){
 
-    if(document.getElementsByClassName('border-green').length < 5){  
+    if(document.getElementsByClassName('border-green').length < 6){  
         save.classList.remove('show');   
         save.classList.add('hide');
         save.classList.add('purple-bg');
@@ -167,7 +174,7 @@ function checkAll(){
         inputGame.required = "required";
         inputMainChar.required = "required";
 
-        let txt = "Maak alle velden groen s.v.p. (*.*)!";
+        let txt = "Maak de rode velden groen s.v.p. (*.*)!";
         let paragraph = document.getElementById("massage");
         paragraph.classList.add('show')
         paragraph.innerHTML = "<span class='yellow'>" + txt + "</span>";
@@ -177,5 +184,5 @@ function checkAll(){
 
 function makeImgtag(){
     const spanImage = document.getElementById("imageSpace");
-    spanImage.innerHTML = '<i class="fas fa-user-astronaut pageIcon"></i>';
+    spanImage.innerHTML = '<img class="ava-prvu" src="./assets/images/user-astronaut-solid.svg" id="avatarPreview" alt="Avatar preview">';
 }

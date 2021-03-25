@@ -150,19 +150,8 @@ const getData = axios({
     'Client-ID': process.env.TWITCH_CLIENT_ID,
     'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
   },
-  data:'fields name, id; where rating > 70 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1269387203; sort name asc; limit 100;' //1553384003 
+  data:'fields name, id, cover; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;' 
 })
-
-app.get('/games', (req, res) => {
-  getData
-    .then(response => {
-      console.log(response.data);
-      res.send(response.data);
-    })
-    .catch(err => {
-      console.error(err);
-    });
-});
 
 // Register account
 app.get('/register', checkNotAuthenticated, (req, res) => {

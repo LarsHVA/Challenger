@@ -52,6 +52,11 @@ label {
   display: block;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
 input,
 select {
   border-radius: 2px;
@@ -61,7 +66,6 @@ select {
   margin: 1em 0;
   padding: 0;
   border-width: 2px;
-  bord
 }
 
 input[type="file"] {
@@ -222,8 +226,9 @@ span#imageSpace {
 }
 
 img.ava-prvu {
-  width: 15%;
+  width: 20%;
 }
+
 
 .border-green {
   border: solid #adf218;
@@ -246,9 +251,10 @@ img.ava-prvu {
   text-transform: uppercase;
 }
 
-/* .hide {
+.hide {
   display: none;
-} */
+}
+
 .show {
   display: block;
 }
