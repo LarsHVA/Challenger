@@ -3,10 +3,10 @@
 :root {
   --v-black: black;
   --v-white: white;
-  --v-darkBlue: #112F41;
+  --v-darkBlue: #112f41;
   --v-green: #068587;
 
-  --v-background: #EBECEE;
+  --v-background: #ebecee;
 
   --v-font: "Roboto", sans-serif;
 }
@@ -88,7 +88,7 @@ input[type="file"] {
   display: flex;
 }
 
-.flexEye label{
+.flexEye label {
   display: unset;
 }
 
@@ -229,7 +229,6 @@ img.ava-prvu {
   width: 20%;
 }
 
-
 .border-green {
   border: solid #adf218;
   color: #adf218;
@@ -279,8 +278,14 @@ img.ava-prvu {
 
 .message-input {
   display: flex;
+  flex-direction: row;
   position: absolute;
-  bottom: -5em;
+  padding: 0 1em 0 1em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: grey;
+  align-items: baseline;
 }
 
 li.flexUser {

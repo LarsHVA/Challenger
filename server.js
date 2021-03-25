@@ -21,7 +21,11 @@ const flash = require('express-flash');
 const nodemailer = require('nodemailer');
 const date = require('date-fns');
 const axios = require('axios');
+
+// Packages for chatting
 const socketio = require('socket.io');
+// const Redis = require('ioredis');
+// const redisClient = new Redis();
 
 // Security
 const bcrypt = require('bcrypt');
@@ -62,7 +66,13 @@ const upload = multer({ storage: storage });
 
 // Setting up socket.io
 const server = require('http').createServer(app);
-const io = socketio(server)
+const io = socketio(server);
+// , {
+//   adapter: require('socket.io-redis')({
+//     pubClient: redisClient,
+//     subClient: redisClient.duplicate()
+//   })
+// })
 
 express();
 
@@ -217,8 +227,9 @@ app.post('/update', checkAuthenticated, async (req, res) => {
 
 // Display users with same console on one page
 app.get('/console/:console', async (req, res) => {
-  const data = await users.find({console: req.params.console });
-  res.render('match', {data: data});
+  const system = capitalizeFirstLetter(req.params.console)
+  const data = await users.find({console: system });
+  res.render('match', {data});
 });
 
 // Delete user
@@ -271,3 +282,7 @@ function formatMsg(username, message){
 app.get('*', (req, res) => {
   res.status(404).render('not-found.ejs');
 });
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
