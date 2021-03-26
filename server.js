@@ -16,6 +16,12 @@ const port = process.env.PORT || 8000;
 // Use
 const flash = require('express-flash');
 const nodemailer = require('nodemailer');
+<<<<<<< Updated upstream
+=======
+const date = require('date-fns');
+const axios = require('axios');
+const cookieParser = require('cookie-parser');
+>>>>>>> Stashed changes
 
 // Models
 const users = require('./models/users.js');
@@ -88,6 +94,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./static/public'));
 // output JSON
 app.use(express.json());
+// cookie-parser for flash messages
+app.use(cookieParser());
 // View map
 app.set('views', 'view');
 // Security
@@ -152,6 +160,7 @@ app.post('/challenge', async (req, res) => {
   }
 });
 
+<<<<<<< Updated upstream
   // **DEIVER**
   ///GAME NAMES///
   const getData = axios({
@@ -180,6 +189,19 @@ app.get('/games', (req,res)=> {
     });
 });
 
+=======
+// Game names
+const getData = axios({
+  url: "https://api.igdb.com/v4/games",
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Client-ID': process.env.TWITCH_CLIENT_ID,
+    'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
+  },
+  data:'fields name, id, cover; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;'
+})
+>>>>>>> Stashed changes
 
 
 // **DEIVER**
@@ -200,6 +222,7 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
 // Add account to DB en redirect to login
 app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, res) => {
   try {
+<<<<<<< Updated upstream
       const hash = await bcrypt.hashSync(req.body.password, 10);
       const user = new users({
           //file-upload by Deiver
@@ -211,6 +234,23 @@ app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, r
           tell: req.body.tell,
           info: req.body.info,
           password: hash 
+=======
+    const hash = await bcrypt.hashSync(req.body.password, 10);
+    const user = new users({
+      //file-upload by Deiver
+      storedAvaGamer: './uploads/' + req.file.filename,
+      email: req.body.email,
+      username: req.body.username,
+      console: req.body.console,
+      game: req.body.game,
+      tell: req.body.tell,
+      info: req.body.info,
+      password: hash
+    });
+    await user.save()
+      .then(() => {
+        res.redirect('login');
+>>>>>>> Stashed changes
       });
       await user.save() 
         .then(() => {
@@ -230,6 +270,7 @@ app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, r
 // Add account to DB en redirect to login
 app.post('/update', checkAuthenticated, async (req, res) => {
   try {
+<<<<<<< Updated upstream
       const filter = { username: req.user.username };
       const hash = await bcrypt.hashSync(req.body.password, 10);
       let user = await users.findOne({ 
@@ -240,12 +281,25 @@ app.post('/update', checkAuthenticated, async (req, res) => {
       });
       await user.save() 
         .then(() => {res.redirect('account');});
+=======
+    const filter = { username: req.user.username };
+    const hash = await bcrypt.hashSync(req.body.password, 10);
+    let user = await users.findOne({
+      username: req.user.username
+    });
+    await users.updateOne(filter, {
+      password: hash
+    });
+    await user.save()
+      .then(() => {res.redirect('account');});
+>>>>>>> Stashed changes
   } catch(err) {
       console.log(err);
       res.status(500).send();
   }
 });
 
+<<<<<<< Updated upstream
  // Display users with same console on one page
 app.get('/nintendo' , async (req , res) => {
   const dataNintendo = await users.find({console: 'nintendo'});
@@ -260,6 +314,18 @@ app.get('/playstation' , async (req , res) => {
 app.get('/xbox' , async (req , res) => {
   const dataXbox = await users.find({console: 'xbox'});
   res.render('match', {data: dataXbox});
+=======
+// Display users with same console on one page
+app.get('/console/:console', async (req, res) => {
+  const system = capitalizeFirstLetter(req.params.console)
+  const data = await users.find({console: system });
+  // const count = results.length;
+  // console.log(count);
+  const countQuery = users.where({console: system }).countDocuments();
+  console.log(countQuery)
+  req.flash('info', 'Je filtert op', req.params.console);
+  res.render('match', {data});
+>>>>>>> Stashed changes
 });
 
 app.get('/wii' , async (req , res) => {
@@ -286,8 +352,13 @@ app.get('/gamecube' , async (req , res) => {
 // Delete user
 app.post('/delete', checkAuthenticated, async (req, res) => {
   try {
+<<<<<<< Updated upstream
     const user = await users.findOneAndDelete({ 
       username: req.user.username 
+=======
+    await users.findOneAndDelete({
+      username: req.user.username
+>>>>>>> Stashed changes
     }).exec();
     res.redirect('login');
   } catch(err) {
@@ -321,3 +392,10 @@ app.get('/chat', async (req, res) => {
 app.get('*', (req, res) => {
 	res.status(404).render('not-found.ejs');
 });
+<<<<<<< Updated upstream
+=======
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+>>>>>>> Stashed changes
