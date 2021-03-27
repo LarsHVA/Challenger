@@ -160,7 +160,7 @@ const getData = axios({
     'Client-ID': process.env.TWITCH_CLIENT_ID,
     'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
   },
-  data:'fields name, id, cover.url; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;' 
+  data:'fields name, id, cover.url; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;'
 })
 
 app.get('/games', (req, res) => {
@@ -199,9 +199,9 @@ app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, r
       game: req.body.game,
       gameName: req.body.gameName,
       info: req.body.info,
-      password: hash 
+      password: hash
     });
-    await user.save() 
+    await user.save()
       .then(() => {
         res.redirect('login');
       });
@@ -221,13 +221,13 @@ app.post('/update', checkAuthenticated, async (req, res) => {
   try {
     const filter = { username: req.user.username };
     const hash = await bcrypt.hashSync(req.body.password, 10);
-    let user = await users.findOne({ 
-      username: req.user.username 
+    let user = await users.findOne({
+      username: req.user.username
     });
-    await users.updateOne(filter, { 
-      password: hash 
+    await users.updateOne(filter, {
+      password: hash
     });
-    await user.save() 
+    await user.save()
       .then(() => {res.redirect('account');});
   } catch(err) {
     console.log(err);
@@ -245,8 +245,8 @@ app.get('/console/:console', async (req, res) => {
 // Delete user
 app.post('/delete', checkAuthenticated, async (req, res) => {
   try {
-    await users.findOneAndDelete({ 
-      username: req.user.username 
+    await users.findOneAndDelete({
+      username: req.user.username
     }).exec();
     res.redirect('login');
   } catch(err) {
@@ -288,7 +288,7 @@ function formatMsg(username, message){
   }
 }
 
-// Error 404
+// Error 404 **
 app.get('*', (req, res) => {
   res.status(404).render('not-found.ejs');
 });
