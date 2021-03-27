@@ -131,7 +131,7 @@ app.post('/challenge', async (req, res) => {
 
     const mailOptions = {
       from: process.env.MAIL,
-      to: req.user.email,
+      to: req.body.email,
       subject: 'U bent uitgedaagt',
       text: text
     };
