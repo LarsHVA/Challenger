@@ -151,7 +151,7 @@ app.post('/challenge', async (req, res) => {
   }
 });
 
-// Game names
+// Games data
 const getData = axios({
   url: "https://api.igdb.com/v4/games",
   method: 'POST',
@@ -160,8 +160,18 @@ const getData = axios({
     'Client-ID': process.env.TWITCH_CLIENT_ID,
     'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
   },
-  data:'fields name, id, cover; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;' 
+  data:'fields name, id, cover.url; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;' 
 })
+
+app.get('/games', (req, res) => {
+  getData
+    .then(response => {
+      res.send({gameNames: response.data});
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
 
 // Register account
 app.get('/register', checkNotAuthenticated, (req, res) => {
@@ -187,7 +197,7 @@ app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, r
       username: req.body.username,
       console: req.body.console,
       game: req.body.game,
-      tell: req.body.tell,
+      gameName: req.body.gameName,
       info: req.body.info,
       password: hash 
     });
