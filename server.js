@@ -235,11 +235,13 @@ app.post('/update', checkAuthenticated, async (req, res) => {
   }
 });
 
-// Display users with same console on one page
+// Display users with same console on one page and show filter results
 app.get('/console/:console', async (req, res) => {
   const system = capitalizeFirstLetter(req.params.console)
   const data = await users.find({console: system });
+  req.flash('info', 'Je filtert op', req.params.console);
   res.render('match', {data});
+
 });
 
 // Delete user
