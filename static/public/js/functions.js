@@ -1,12 +1,16 @@
-// Hoisted functions
+// Register page
 makeImgtag();
+autoFillValue();
 
 //iputs
-const inputImg = document.getElementById('gamerAva');
-const btnUpImg = document.getElementById('btnUpImg');
-const inputName = document.getElementById('username');
-const inputGame = document.getElementById('game');
-const inputMainChar = document.getElementById('console');
+const inputImg = document.getElementById('gamerAva');       // image input
+const btnUpImg = document.getElementById('btnUpImg');       // image btn input
+const inputMail = document.getElementById('email');         // email  input 
+const inputName = document.getElementById('username');      // username input
+const inputPass = document.querySelector('.userPass');      // passwoord input
+const inputGame = document.getElementById('game');          // game input
+const inputMainChar = document.getElementById('console');   // nameChar input
+const inputInfo = document.getElementById('info');          // info input..
 
 //Elments
 const imgTag = document.getElementById("avatarPreview");
@@ -21,6 +25,12 @@ inputName.addEventListener("input", check, false);
 inputGame.addEventListener("change", selectCheck, false);
 
 inputMainChar.addEventListener("input", checkChar, false);
+
+inputMail.addEventListener("input", checkMail, false);
+
+inputPass.addEventListener("input", checkPass, false);
+
+inputInfo.addEventListener("input", checkInfo, false);
 
 
 // functions
@@ -120,16 +130,59 @@ function checkChar(){
 
     }
 };
+function checkMail(){
 
+
+    if(inputMail.value.length > 2){
+        inputMail.classList.remove('border-red');
+        inputMail.classList.add('border-green');
+        goodCheck()
+        
+    } else {
+        inputMail.classList.remove('border-green');
+        inputMail.classList.add('border-red');
+        goodCheck()
+
+    }
+};
+function checkPass(){
+
+
+    if(inputPass.value.length > 2){
+        inputPass.classList.remove('border-red');
+        inputPass.classList.add('border-green');
+        goodCheck()
+        
+    } else {
+        inputPass.classList.remove('border-green');
+        inputPass.classList.add('border-red');
+        goodCheck()
+
+    }
+};
+function checkInfo(){
+
+
+    if(inputInfo.value.length > 5){
+        inputInfo.classList.remove('border-red');
+        inputInfo.classList.add('border-green');
+        goodCheck()
+        
+    } else {
+        inputInfo.classList.remove('border-green');
+        inputInfo.classList.add('border-red');
+        goodCheck()
+
+    }
+};
 
 const save = document.getElementById('extraCheck');
-// const save = document.getElementById('extraCheck');
 
     save.addEventListener('click', checkAll, false);
 
     
 function goodCheck(){
-    if(document.getElementsByClassName('border-green').length == 6){
+    if(document.getElementsByClassName('border-green').length == 9){
         save.classList.remove('no-click');
         save.classList.remove('purple-bg');
         save.classList.add('show');
@@ -141,17 +194,15 @@ function goodCheck(){
     } else{
         checkAll()
     }
-    if(document.getElementsByClassName('border-green').length < 6){
+    if(document.getElementsByClassName('border-green').length < 9){
         save.classList.add('hide');   
     }
     
 };
 
-
-
 function checkAll(){
 
-    if(document.getElementsByClassName('border-green').length < 6){  
+    if(document.getElementsByClassName('border-green').length < 9){  
         save.classList.remove('show');   
         save.classList.add('hide');
         save.classList.add('purple-bg');
@@ -173,8 +224,11 @@ function checkAll(){
         inputName.required = "required";
         inputGame.required = "required";
         inputMainChar.required = "required";
+        inputMail.required = "required";
+        inputPass.required = "required";
+        inputInfo.required = "required";
 
-        let txt = "Maak de rode velden groen s.v.p. (*.*)!";
+        let txt = "Maak de velden groen s.v.p. (*.*)!";
         let paragraph = document.getElementById("massage");
         paragraph.classList.add('show')
         paragraph.innerHTML = "<span class='yellow'>" + txt + "</span>";
@@ -185,4 +239,12 @@ function checkAll(){
 function makeImgtag(){
     const spanImage = document.getElementById("imageSpace");
     spanImage.innerHTML = '<img class="ava-prvu" src="./assets/images/user-astronaut-solid.svg" id="avatarPreview" alt="Avatar preview">';
+};
+
+function autoFillValue(){
+    document.getElementById('game').onchange = function(){ 
+        let gameName = this.selectedOptions[0].getAttribute('id');
+        const inputText = document.getElementById('gameName')
+        inputText.setAttribute('value', gameName);
+    };
 }

@@ -166,6 +166,9 @@ video {
   max-width: 100%;
   height: auto;
 }
+img.cover {
+  width: 30%;
+}
 
 /* Nav */
 ul.navigation {
@@ -219,7 +222,7 @@ ul.match li ul li span {
 ul.match div {
   border-left: 1px solid;
 }
-
+/* /Register/ */
 span#imageSpace {
   display: flex;
   justify-content: center;
@@ -230,23 +233,23 @@ img.ava-prvu {
 }
 
 .border-green {
-  border: solid #adf218;
-  color: #adf218;
+  border: solid #4ECDC4;
+  color: #4ECDC4;
   transition: 0.3s;
 }
 
 .border-red {
-  border: solid #ff3b52;
-  color: #ff3b52;
+  border: solid #FF6B6B;
+  color: #FF6B6B;
   transition: 0.3s;
 }
 
 .yellow {
-  color: #fcff3b;
+  color: #FFE66D;
   text-transform: uppercase;
 }
 .green {
-  color: #adf218;
+  color: #4ECDC4;
   text-transform: uppercase;
 }
 
@@ -257,7 +260,7 @@ img.ava-prvu {
 .show {
   display: block;
 }
-
+/* // */
 .messages-container {
   position: relative;
   margin-top: 0.5em;
@@ -296,12 +299,15 @@ li.flexUser {
 li.flexUser span {
   margin-left: 1em;
 }
-
+/* // */
 img.avatar {
-  width: 40px;
-  border-radius: 50px;
+  width: 3em;
+  max-height: 3em;
+  border-radius: 100%;
   border: 1px solid;
+  background: black;
 }
+/* // */
 
 .tags a:link {
   display: inline-block;

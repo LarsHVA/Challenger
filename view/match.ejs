@@ -14,9 +14,10 @@
       <i class="fas fa-tag"></i>
       <span>Switch</span>
     </a>
-    <a href="/console/pc">
+
+    <a href="/console/PC">
       <i class="fas fa-tag"></i>
-      <span>Wii</span>
+      <span>PC</span>
     </a>
     <a href="/console/xbox">
       <i class="fas fa-tag"></i>
@@ -33,23 +34,25 @@
   <ul class="match">
     <div>
       <li class="flexUser">
-        <img class="avatar" src=<%= data[index].storedAvaGamer %> alt="Gamer Avatar">
+        <img  class="avatar" src=<%= data[index].storedAvaGamer %> alt="Gamer Avatar">
         <span><%= data[index].username %></span>
       </li>
       <li class="items">
         <ul>
+
+          <li>
+            <span class="cover-name"></span>
+            <img class="cover"src='<%= data[index].game %>'>
+          </li>
+
+          <li>
+            <i class="fas fa-heart"></i><%= data[index].gameName %></a>
+          </li>
+
           <li>
             <i class="fas fa-gamepad"></i>
             <span><%= data[index].console %></span>
           </li>
-          <li>
-            <i class="fas fa-ghost"></i>
-            <span><%= data[index].game %></span>
-          </li>
-          <!-- <li>
-            <i class="fas fa-headset"></i>
-            <a href="tel:<%= data[index].tell %>"><%= data[index].tell %></a>
-          </li> -->
           <li>
             <i class="fas fa-info"></i>
             <span><%= data[index].info %></span>
