@@ -1,21 +1,21 @@
 <%- include ("./partials/head") %>
-    <h1>Account</h1>
-    <h2>Wachtwoord veranderen</h2>
-    <form method="POST" action="/update">
+<h1>Account</h1>
+<h2>Wachtwoord veranderen</h2>
+<form method="POST" action="/update">
 
-        <div class="flexEye">
+    <div class="flexEye">
         <label for="password">Wachtwoord</label>
         <i class="far fa-eye" id="togglePassword"></i>
-        </div>
-        <input type="password" name="password" id="changePassword" value="" required>
+    </div>
+    <input type="password" name="password" id="changePassword" value="" required>
 
-        <button type="submit">wijzigen</button>
+    <button type="submit">wijzigen</button>
 
-    </form>
-    <h2>Account verwijderen</h2>
-    <form method="POST" action="/delete">
+</form>
+<h2>Account verwijderen</h2>
+<form method="POST" action="/delete">
 
-        <button type="submit">Verwijderen</button>
+    <button type="submit">Verwijderen</button>
 
-    </form>
+</form>
 <%- include ("./partials/footer") %>
