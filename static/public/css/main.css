@@ -192,6 +192,7 @@ ul.match {
 ul.chat {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 ul.chat li {
@@ -233,23 +234,23 @@ img.ava-prvu {
 }
 
 .border-green {
-  border: solid #4ECDC4;
-  color: #4ECDC4;
+  border: solid #4ecdc4;
+  color: #4ecdc4;
   transition: 0.3s;
 }
 
 .border-red {
-  border: solid #FF6B6B;
-  color: #FF6B6B;
+  border: solid #ff6b6b;
+  color: #ff6b6b;
   transition: 0.3s;
 }
 
 .yellow {
-  color: #FFE66D;
+  color: #ffe66d;
   text-transform: uppercase;
 }
 .green {
-  color: #4ECDC4;
+  color: #4ecdc4;
   text-transform: uppercase;
 }
 
@@ -264,7 +265,7 @@ img.ava-prvu {
 .messages-container {
   position: relative;
   margin-top: 0.5em;
-  background-color: grey;
+  background-color: #e7e7e7;
   padding: 0.3em;
 }
 
@@ -276,19 +277,26 @@ img.ava-prvu {
 .messages-container .messages .message {
   background-color: white;
   padding: 0.5em;
-  margin: 0.5em 0 0.5em 0;
+  margin: 0.5em auto;
+  border-radius: 10px;
+  box-shadow: 0px 0px 44px 1px rgb(0 0 0 / 9%);
+  width: 85%;
 }
 
 .message-input {
-  display: flex;
-  flex-direction: row;
+  display: unset;
+  flex-direction: unset;
   position: absolute;
   padding: 0 1em 0 1em;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: grey;
+  background-color: unset;
   align-items: baseline;
+}
+
+input#msg {
+  min-width: 100%;
 }
 
 li.flexUser {
