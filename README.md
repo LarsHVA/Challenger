@@ -2,7 +2,8 @@
 
 ![Wireframe eerste versie](https://github.com/LarsHVA/Challenger/blob/main/doc/Group%202.png?raw=true)
 
-retroMatch is a matching app that helps users to find people who like an (old) game that is no longer popular / available, has online support or helps search companions (perhaps new friends).
+Challenger is a matching app that helps users to find people who like the same game and want to challenge each other; who is the best in the game?
+Also search for companions ( andperhaps new friends).
 
 ## Installation
 
@@ -24,7 +25,10 @@ retroMatch is a matching app that helps users to find people who like an (old) g
 ### App install
 
 Run the following code in your terminal.
-![Installation](https://github.com/LarsHVA/project-tech/blob/main/doc/cloneProject.png?raw=true)
+
+`git clone https://github.com/LarsHVA/Challenger.git`
+
+`git install`
 
 Make a `.env` file with:
 
@@ -40,26 +44,34 @@ Database: Project;
 Collection: users;
 ```
 
+### Run App
 When the setup is complete
-run `npm start` in the terminal.
+run `npm start` in the terminal. You can find the app under `http://localhost:8000/`
 
 ## DOCS
 
-[Wiki](https://github.com/LarsHVA/project-tech/wiki)
+[Wiki](https://github.com/LarsHVA/Challenger/wiki)
 
 ## Dependencies
 
+- [axios](https://www.npmjs.com/package/axios)
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - [body-parser](https://www.npmjs.com/package/body-parser)
+- [date-fns](https://www.npmjs.com/package/date-fns)
 - [dotenv](https://www.npmjs.com/package/dotenv)
 - [ejs](https://www.npmjs.com/package/ejs)
 - [express](https://www.npmjs.com/package/express)
 - [express-flash](https://www.npmjs.com/package/express-flash)
 - [express-session](https://www.npmjs.com/package/express-session)
+- [ioredis](https://www.npmjs.com/package/ioredis)
 - [mongodb](https://www.npmjs.com/package/mongodb)
 - [mongoose](https://www.npmjs.com/package/mongoose)
+- [multer](https://www.npmjs.com/package/multer)
+- [nodemailer](https://www.npmjs.com/package/nodemailer)
 - [passport](https://www.npmjs.com/package/passport)
 - [passport-local](https://www.npmjs.com/package/passport-local)
+- [socket.io](https://www.npmjs.com/package/socket.io)
+- [socket.io-redis](https://www.npmjs.com/package/socket.io-redis)
 
 ## devDependencies
 
