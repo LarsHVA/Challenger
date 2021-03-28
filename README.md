@@ -15,6 +15,8 @@ Also search for companions ( andperhaps new friends).
 ### Make account
 
 - [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- [Gmail](https://www.google.com/intl/nl/gmail/about/#)
+- [Twitch dev](https://dev.twitch.tv/)
 
 #### Documentation
 
@@ -35,6 +37,10 @@ Make a `.env` file with:
 ```js
 URI = //URI of MongoDB
 SESSION_SECRET = //Random key
+TWITCH_CLIENT_ID = //Twitch client id
+TWITCH_APP_ACCESS_TOKEN = //Twitch app access token
+MAIL= //Gmail mail
+PASSWOORDMAIL= //Gmail passwoord
 ```
 
 ### Create Database
