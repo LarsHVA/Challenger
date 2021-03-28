@@ -1,78 +1,80 @@
 <%- include ("./partials/head2") %>
-    <span id="imageSpace">
-        <i class="fas fa-user-astronaut pageIcon"></i>   
-    </span>
-    <h1>Registreer</h1>
+<span id="imageSpace">
+    <i class="fas fa-user-astronaut pageIcon"></i>
+</span>
+<h1>Registreer</h1>
 
-    <form method="POST" action="/add" enctype="multipart/form-data">
+<form method="POST" action="/add" enctype="multipart/form-data">
+    <p>
+        <label for="gamerAva" id="btnUpImg" class="file-upload">
+            <i class="fas fa-file-upload inputStyle"></i>
+            <span>
+                Upload profiel foto
+            </span>
+        </label>
+        <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
+    </p>
+    <p>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="voorbeeld@mail.com" required>
+    </p>
+    <p>
+        <label for="username">Gebruikersnaam</label>
+        <input type="text" name="username" id="username" placeholder="Voorbeeld Naam" required>
         <p>
-            <label for="gamerAva" id="btnUpImg" class="file-upload">
-                <i class="fas fa-file-upload inputStyle"></i>
-                <span>
-                    Upload profiel foto
-                </span> 
-            </label>
-            <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
-        </p>
-        <p>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="voorbeeld@mail.com" required>
-        </p>
-        <p>
-            <label for="username">Gebruikersnaam</label>
-            <input type="text" name="username" id="username" placeholder="Voorbeeld Naam" required>
-        <p>
-        <div class="flexEye">
-            <label for="password">Wachtwoord</label>
-            <i class="far fa-eye " id="togglePassword"></i>
-        </div>
+            <div class="flexEye">
+                <label for="password">Wachtwoord</label>
+                <i class="far fa-eye " id="togglePassword"></i>
+            </div>
             <input class="userPass" type="password" name="password" id="changePassword" required>
         </p>
 
         <label for="console">Console</label>
-            <select id="console" name="console"  required="">
-                <option value="" selected="">Kies je Console... </option>
-                <option>Gamecube</option>
-                <option>Wii</option>
-                <option>Switch</option>
-                <option>Pc</option>
-                <option>Xbox</option>
-                <option>Playstation</option>
-            </select>
-        </p>
-        <P>
+        <select id="console" name="console" required="">
+            <option value="" selected="">Kies je Console... </option>
+            <option>Gamecube</option>
+            <option>Wii</option>
+            <option>Switch</option>
+            <option>Pc</option>
+            <option>Xbox</option>
+            <option>Playstation</option>
+        </select>
+    </p>
+    <P>
         <label for="game">Kies uit:</label>
-            <select id="game" name="game" required="">
-                <option value="" selected="">Voorbeeld Game... </option>
-                <% for(var i=0; i < gameNames.length; i++) { %>
+        <select id="game" name="game" required="">
+            <option value="" selected="">Voorbeeld Game... </option>
+            <% for(var i=0; i < gameNames.length; i++) { %>
 
-                <option id="<%= gameNames[i].name %>" value="<%= gameNames[i].cover.url %>" class="choise"><%= gameNames[i].name %></option>
-                <% } %>
-            </select>
-            <span>
-                <label class="hide" for="gameName">
-                    <input type="text" name="gameName" id="gameName" style="display:none;"> 
-                </label>
-            </span>
-        </P>
-        <p>
-            <label for="info">Vertel iets over je zelf</label>
-            <input type="text" name="info" id="info" placeholder="Ik kan goed...">
-        </p>
-        <p>
-            <button type="submit" id="extraCheck">Register</button>
-            <span id="massage" class="hide" ></span>
-        </p>
-    </form>
+            <option id="<%= gameNames[i].name %>" value="<%= gameNames[i].cover.url %>" class="choise">
+                <%= gameNames[i].name %></option>
+            <% } %>
+        </select>
+        <span>
+            <label class="hide" for="gameName">
+                <input type="text" name="gameName" id="gameName" style="display:none;">
+            </label>
+        </span>
+    </P>
+    <p>
+        <label for="info">Vertel iets over je zelf</label>
+        <input type="text" name="info" id="info" placeholder="Ik kan goed...">
+    </p>
+    <p>
+        <button type="submit" id="extraCheck">Register</button>
+        <span id="massage" class="hide"></span>
+    </p>
+</form>
 
-    <a href="/login">Login</a>
-    
-    </main>
-    <footer>
-        <span>made by: //DODO:</span>
-    </footer>
-    <script src="./js/functions.js"></script>
-    <script src="./js/main.js"></script> 
+<a href="/login">Login</a>
+
+</main>
+<footer>
+    <span>made by: //DODO:</span>
+</footer>
+<script src="./js/functions.js"></script>
+<script src="./js/main.js"></script>
 
 </body>
+
 </html>

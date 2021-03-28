@@ -10,7 +10,9 @@ const port = process.env.PORT || 8000;
 require('dotenv').config();
 const mongoose = require('mongoose');
 const DBConnection = require('./connection.js');
-const { SSL_OP_NO_TICKET } = require('constants');
+const {
+  SSL_OP_NO_TICKET
+} = require('constants');
 DBConnection(mongoose);
 
 // Models
@@ -37,6 +39,7 @@ initializePassport(
   username => users.find(user => user.username === username),
   id => users.find(user => user.id === id)
 );
+
 function checkAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -62,7 +65,9 @@ const storage = multer.diskStorage({
   },
 });
 // Geuploade bestanden naam toekennen.
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage
+});
 
 // Setting up socket.io
 const server = require('http').createServer(app);
@@ -82,7 +87,9 @@ server.listen(port);
 app.set('view engine', 'ejs');
 // Express body parser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 // Static > public folder
 app.use(express.static('./static/public'));
 // output JSON
@@ -102,7 +109,9 @@ app.use('*', saveLocal);
 // Show matching accounts
 app.get('/', checkAuthenticated, async (req, res) => {
   const dataUser = await users.find();
-  res.render('match', {data: dataUser});
+  res.render('match', {
+    data: dataUser
+  });
 });
 
 // Login
@@ -136,7 +145,7 @@ app.post('/challenge', async (req, res) => {
       text: text
     };
 
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.log(error);
       } else {
@@ -145,7 +154,7 @@ app.post('/challenge', async (req, res) => {
     });
 
     res.redirect('../login');
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     res.status(500).send();
   }
@@ -160,13 +169,15 @@ const getData = axios({
     'Client-ID': process.env.TWITCH_CLIENT_ID,
     'Authorization': process.env.TWITCH_APP_ACCESS_TOKEN,
   },
-  data:'fields name, id, cover.url; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;'
+  data: 'fields name, id, cover.url; where rating > 67 & rating_count > 100 & aggregated_rating > 70 & aggregated_rating_count > 7  & release_dates.date > 1579822403; sort name asc; limit 100;'
 })
 
 app.get('/games', (req, res) => {
   getData
     .then(response => {
-      res.send({gameNames: response.data});
+      res.send({
+        gameNames: response.data
+      });
     })
     .catch(err => {
       console.error(err);
@@ -179,7 +190,9 @@ app.get('/register', checkNotAuthenticated, (req, res) => {
   getData
     .then(igDb => {
       let igdbData = igDb.data;
-      res.render('register', {gameNames: igdbData});
+      res.render('register', {
+        gameNames: igdbData
+      });
     })
     .catch(err => {
       console.error(err);
@@ -205,7 +218,7 @@ app.post('/add', checkNotAuthenticated, upload.single("gamerAva"), async (req, r
       .then(() => {
         res.redirect('login');
       });
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     res.status(500).send();
   }
@@ -219,7 +232,9 @@ app.get('/account', checkAuthenticated, (req, res) => {
 // Add account to DB en redirect to login
 app.post('/update', checkAuthenticated, async (req, res) => {
   try {
-    const filter = { username: req.user.username };
+    const filter = {
+      username: req.user.username
+    };
     const hash = await bcrypt.hashSync(req.body.password, 10);
     let user = await users.findOne({
       username: req.user.username
@@ -228,8 +243,10 @@ app.post('/update', checkAuthenticated, async (req, res) => {
       password: hash
     });
     await user.save()
-      .then(() => {res.redirect('account');});
-  } catch(err) {
+      .then(() => {
+        res.redirect('account');
+      });
+  } catch (err) {
     console.log(err);
     res.status(500).send();
   }
@@ -238,9 +255,13 @@ app.post('/update', checkAuthenticated, async (req, res) => {
 // Display users with same console on one page and show filter results
 app.get('/console/:console', async (req, res) => {
   const system = capitalizeFirstLetter(req.params.console)
-  const data = await users.find({console: system });
+  const data = await users.find({
+    console: system
+  });
   req.flash('info', 'Je filtert op', req.params.console);
-  res.render('match', {data});
+  res.render('match', {
+    data
+  });
 
 });
 
@@ -251,7 +272,7 @@ app.post('/delete', checkAuthenticated, async (req, res) => {
       username: req.user.username
     }).exec();
     res.redirect('login');
-  } catch(err) {
+  } catch (err) {
     console.log(err);
     res.status(500).send();
   }
@@ -271,18 +292,24 @@ io.on('connection', socket => {
 });
 
 // Save logged in user to session
-function saveLocal (req, res, next){
+function saveLocal(req, res, next) {
   res.locals.user = req.user || null;
   next();
 }
 
 // Chatpage
 app.get('/:username/chat', checkAuthenticated, async (req, res) => {
-  const dataUser = await users.find({_id: {$nin: res.locals.user.id}});
-  res.render('chat', {data: dataUser});
+  const dataUser = await users.find({
+    _id: {
+      $nin: res.locals.user.id
+    }
+  });
+  res.render('chat', {
+    data: dataUser
+  });
 });
 
-function formatMsg(username, message){
+function formatMsg(username, message) {
   return {
     username: username,
     message: message,
