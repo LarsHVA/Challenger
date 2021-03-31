@@ -8,7 +8,7 @@ function defaultAvatar(){
     for(i = 0; i < userAvaDef.length; i++){
         userAvaDef[i].setAttribute("onerror", "this.onerror=null; this.src='./assets/images/user-astronaut-solid.svg'");
     }
-    
+
 };
 
 // Cover Size bigger

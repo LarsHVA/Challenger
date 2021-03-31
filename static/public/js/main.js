@@ -19,4 +19,3 @@ if(window.location.pathname == '/account' || window.location.pathname == '/regis
         togglePassword.classList.toggle('fa-eye-slash');
     });
 }
-
