@@ -1,5 +1,6 @@
 <%- include ("./partials/head") %>
-  <h1>Challengers</h1>
+<h1>Challengers</h1>
+
 
   <button type="button" name="filteren" class="verbergButton" >Verberg filters</button>
 
@@ -39,42 +40,42 @@
   <% for (var index = 0; index < data.length; index++) { %>
 
 
+<div class="info">
+  <h2> <%-messages.info%></h2>
+</div>
 
-  <ul class="match">
-    <div>
-      <li class="flexUser">
-        <img  class="avatar" src=<%= data[index].storedAvaGamer %> alt="Gamer Avatar">
-        <span><%= data[index].username %></span>
-      </li>
-      <li class="items">
-        <ul>
-
-          <li>
-            <span class="cover-name"></span>
-            <img class="cover"src='<%= data[index].game %>'>
-          </li>
-
-          <li>
-            <i class="fas fa-heart"></i><%= data[index].gameName %></a>
-          </li>
-
-          <li>
-            <i class="fas fa-gamepad"></i>
-            <span><%= data[index].console %></span>
-          </li>
-          <li>
-            <i class="fas fa-info"></i>
-            <span><%= data[index].info %></span>
-          </li>
-          <li>
-            <form method="POST" action="/challenge">
-              <input type="hidden" name="email" value="<%= data[index].email %>">
-              <button type="submit">uitdagen</button>
-            </form>
-          </li>
-        </ul>
-      </li>
-    </div>
-  </ul>
-  <% } %>
+<ul class="match">
+  <div>
+    <li class="flexUser">
+      <img class="avatar" src='.<%= data[index].storedAvaGamer %>' alt="Gamer Avatar">
+      <span><%= data[index].username %></span>
+    </li>
+    <li class="items">
+      <ul>
+        <li>
+          <span class="cover-name"></span>
+          <img class="cover" src='<%= data[index].game %>'>
+        </li>
+        <li>
+          <i class="fas fa-heart"></i><%= data[index].gameName %></a>
+        </li>
+        <li>
+          <i class="fas fa-gamepad"></i>
+          <span><%= data[index].console %></span>
+        </li>
+        <li>
+          <i class="fas fa-info"></i>
+          <span><%= data[index].info %></span>
+        </li>
+        <li>
+          <form method="POST" action="/challenge">
+            <input type="hidden" name="email" value="<%= data[index].email %>">
+            <button type="submit">uitdagen</button>
+          </form>
+        </li>
+      </ul>
+    </li>
+  </div>
+</ul>
+<% } %>
 <%- include ("./partials/footer") %>
