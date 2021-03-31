@@ -39,17 +39,17 @@
     </select>
 
     <label for="game">Kies je favoriete game cover:</label>
-    <select id="game" name="game" required="">
+    <select id="game" name="gameName" required="">
         <option value="" selected="">Voorbeeld Game... </option>
         <% for(var i=0; i < gameNames.length; i++) { %>
 
-        <option id="<%= gameNames[i].name %>" value="<%= gameNames[i].cover.url %>" class="choise">
+        <option id="<%= gameNames[i].cover.url %>" value="<%= gameNames[i].name %>" class="choise">
             <%= gameNames[i].name %></option>
         <% } %>
     </select>
     <span>
         <label class="hide" for="gameName">Zet de game naam:
-            <input type="text" name="gameName" id="gameName" style="display:none;">
+            <input type="text" name="game" id="gameName" style="display:none;">
         </label>
     </span>
 
