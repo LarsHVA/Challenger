@@ -1,4 +1,5 @@
 // Register page
+
 makeImgtag();
 autoFillValue();
 
@@ -28,6 +29,7 @@ inputMainChar.addEventListener("input", checkChar, false);
 
 inputMail.addEventListener("input", checkMail, false);
 
+inputPass.addEventListener("focus", checkPass, false);
 inputPass.addEventListener("input", checkPass, false);
 
 inputInfo.addEventListener("input", checkInfo, false);

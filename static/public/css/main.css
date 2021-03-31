@@ -24,79 +24,6 @@ body {
   margin: 1em 10% 0 10%;
 }
 
-.bodyNotLogin {
-  background-color: var(--v-darkBlue);
-  color: var(--v-white);
-}
-
-.bodyNotLogin i {
-  color: var(--v-white);
-}
-
-i {
-  font-size: 35px;
-}
-
-i.pageIcon {
-  display: table;
-  margin: 0.1em auto;
-  font-size: 75px;
-}
-
-i#togglePassword {
-  font-size: 18px;
-  margin-left: 1em;
-}
-
-label {
-  display: block;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-input,
-select {
-  border-radius: 2px;
-  height: 34px;
-  min-width: 300px;
-  max-width: 300px;
-  margin: 1em 0;
-  padding: 0;
-  border-width: 2px;
-}
-
-input[type="file"] {
-  display: none;
-}
-
-.file-upload {
-  background-color: var(--v-white);
-  display: flex;
-  border-radius: 1px;
-  height: 34px;
-  max-width: 300px;
-  margin: 1em 0;
-  color: var(--v-black);
-  align-items: center;
-  justify-content: center;
-}
-
-.flexEye {
-  display: flex;
-}
-
-.flexEye label {
-  display: unset;
-}
-
-i.fas.fa-file-upload.inputStyle {
-  color: var(--v-black);
-  font-size: 25px;
-}
-
 button {
   width: 100%;
   max-width: 300px;
@@ -104,6 +31,8 @@ button {
   font-size: 16px;
   color: var(--v-white);
   background-color: var(--v-green);
+  border: solid grey;
+  border-radius: 2px;
 }
 
 h1 {
@@ -177,7 +106,7 @@ ul.navigation {
   align-items: center;
 }
 
-ul.navigation li+li {
+ul.navigation li + li {
   margin-left: 0.5em;
 }
 
@@ -226,6 +155,151 @@ ul.match div {
 }
 
 /* /Register/ */
+.bodyNotLogin {
+  background-color: var(--v-darkBlue);
+  color: var(--v-white);
+}
+
+.bodyNotLogin i {
+  color: var(--v-white);
+}
+
+i {
+  font-size: 35px;
+}
+
+i.pageIcon {
+  display: table;
+  margin: 0.1em auto;
+  font-size: 75px;
+}
+
+i#togglePassword {
+  font-size: 18px;
+  margin-left: 1em;
+}
+
+label {
+  display: block;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input,
+select {
+  border-radius: 2px;
+  height: 34px;
+  min-width: 290px;
+  max-width: 290px;
+  margin: 1em 0;
+  padding: 0;
+  border-width: 2px;
+  border-width: 3px;
+  border-style: solid;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.file-upload {
+  background-color: var(--v-white);
+  display: flex;
+  border-radius: 1px;
+  height: 34px;
+  max-width: 295px;
+  margin: 1em 0;
+  color: var(--v-black);
+  align-items: center;
+  justify-content: center;
+  border: solid #767676;
+}
+
+.flexEye {
+  display: flex;
+}
+
+.flexEye label {
+  display: unset;
+}
+
+i.fas.fa-file-upload.inputStyle {
+  color: #112f41;
+  font-size: 25px;
+}
+
+/* // */
+input[type="file"]::file-selector-button {
+  border-radius: 0.5rem;
+  border: none;
+  color: blanchedalmond;
+  background: #1f1fff;
+  cursor: pointer;
+  padding: 0.8rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  transition: 0.5s;
+}
+button:focus,
+button:hover {
+  outline: none;
+  background-color: #068587;
+  border: solid white;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+select:focus {
+  outline: none;
+  background-color: #112f41;
+  transition: 0.3s;
+  border-bottom: solid white;
+  border-width: 3px;
+  border-style: solid;
+  color: #e7e7e7;
+}
+input[type="password"],
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+  display: flex;
+  padding: 0 0 0 5px;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover,
+.button:hover {
+  transition: 0.5s;
+  background: #07b39b;
+}
+select {
+  min-width: 300px;
+  min-height: 40px;
+  padding: 0;
+}
+
+input:hover,
+select:hover,
+.file-upload:hover {
+  background-color: #112f41;
+  color: white;
+  transition: 0.3s;
+}
+
+input:hover::placeholder,
+select:hover::placeholder,
+input:focus::placeholder,
+select:focus::placeholder {
+  color: white;
+}
+
 span#imageSpace {
   display: flex;
   justify-content: center;
@@ -238,23 +312,40 @@ img.ava-prvu {
 .border-green {
   border: solid #4ecdc4;
   color: #4ecdc4;
+  background-color: #112f41;
   transition: 0.3s;
 }
 
 .border-red {
   border: solid #ff6b6b;
   color: #ff6b6b;
+  background-color: #000;
   transition: 0.3s;
 }
 
 .yellow {
   color: #ffe66d;
   text-transform: uppercase;
+  background: black;
+  border-radius: 2px;
+  display: block;
+  max-width: 300px;
+  padding: 1em;
+  border: dashed #ffe66d;
+  transition: 0.8s;
 }
 
 .green {
-  color: #4ecdc4;
+  color: var(--v-background);
   text-transform: uppercase;
+  background: var(--v-darkBlue);
+  border-radius: 2px;
+  display: block;
+  max-width: 260px;
+  padding: 1em;
+  border: solid var(--v-green);
+  transition: 0.8s;
+  margin: 10px 0;
 }
 
 .hide {
@@ -264,8 +355,8 @@ img.ava-prvu {
 .show {
   display: block;
 }
-
 /* // */
+
 .messages-container {
   position: relative;
   margin-top: 0.5em;
