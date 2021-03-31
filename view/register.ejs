@@ -6,58 +6,58 @@
 
 <form method="POST" action="/add" enctype="multipart/form-data">
 
-        <label for="gamerAva" id="btnUpImg" class="file-upload">
-            <i class="fas fa-file-upload inputStyle"></i>
-            <span>
-                Upload profiel foto
-            </span>
-        </label>
-        <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
-
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="voorbeeld@mail.com" required>
-
-        <label for="username">Gebruikersnaam</label>
-        <input type="text" name="username" id="username" placeholder="Voorbeeld Naam" required>
-    
-            <div class="flexEye">
-                <label for="password">Wachtwoord</label>
-                <i class="far fa-eye " id="togglePassword"></i>
-            </div>
-            <input class="userPass" type="password" name="password" id="changePassword" required>
-
-
-        <label for="console">Console</label>
-        <select id="console" name="console" required="">
-            <option value="" selected="">Kies je Console... </option>
-            <option>Gamecube</option>
-            <option>Wii</option>
-            <option>Switch</option>
-            <option>Pc</option>
-            <option>Xbox</option>
-            <option>Playstation</option>
-        </select>
-
-        <label for="game">Kies je favoriete game cover:</label>
-        <select id="game" name="game" required="">
-            <option value="" selected="">Voorbeeld Game... </option>
-            <% for(var i=0; i < gameNames.length; i++) { %>
-
-            <option id="<%= gameNames[i].name %>" value="<%= gameNames[i].cover.url %>" class="choise">
-                <%= gameNames[i].name %></option>
-            <% } %>
-        </select>
+    <label for="gamerAva" id="btnUpImg" class="file-upload">
+        <i class="fas fa-file-upload inputStyle"></i>
         <span>
-            <label class="hide" for="gameName">Zet de game naam:
-                <input type="text" name="gameName" id="gameName" style="display:none;">
-            </label>
+            Upload profiel foto
         </span>
+    </label>
+    <input id="gamerAva" type="file" name="gamerAva" accept="image/*" required>
 
-        <label for="info">Vertel iets over je zelf</label>
-        <input type="text" name="info" id="info" placeholder="Ik kan goed...">
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" placeholder="voorbeeld@mail.com" required>
 
-        <button type="submit" id="extraCheck">Register</button>
-        <span id="massage" class="hide"></span>
+    <label for="username">Gebruikersnaam</label>
+    <input type="text" name="username" id="username" placeholder="Voorbeeld Naam" required>
+
+    <div class="flexEye">
+        <label for="changePassword">Wachtwoord</label>
+        <i class="far fa-eye " id="togglePassword"></i>
+    </div>
+    <input class="userPass" type="password" name="password" id="changePassword" required>
+
+
+    <label for="console">Console</label>
+    <select id="console" name="console" required="">
+        <option value="" selected="">Kies je Console... </option>
+        <option>Gamecube</option>
+        <option>Wii</option>
+        <option>Switch</option>
+        <option>Pc</option>
+        <option>Xbox</option>
+        <option>Playstation</option>
+    </select>
+
+    <label for="game">Kies je favoriete game cover:</label>
+    <select id="game" name="game" required="">
+        <option value="" selected="">Voorbeeld Game... </option>
+        <% for(var i=0; i < gameNames.length; i++) { %>
+
+        <option id="<%= gameNames[i].name %>" value="<%= gameNames[i].cover.url %>" class="choise">
+            <%= gameNames[i].name %></option>
+        <% } %>
+    </select>
+    <span>
+        <label class="hide" for="gameName">Zet de game naam:
+            <input type="text" name="gameName" id="gameName" style="display:none;">
+        </label>
+    </span>
+
+    <label for="info">Vertel iets over je zelf</label>
+    <input type="text" name="info" id="info" placeholder="Ik kan goed...">
+
+    <button type="submit" id="extraCheck">Register</button>
+    <span id="massage" class="hide"></span>
 </form>
 
 <a href="/login">Login</a>
