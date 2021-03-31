@@ -6,7 +6,6 @@
   <button type="button" name="filteren" class="verbergButton" >Verberg filters</button>
 
   <div class="filters">
-
     <a href="/console/gamecube">
       <i class="fas fa-tag"></i>
       <span>Gamecube</span>
@@ -41,7 +40,7 @@
   <% for (var index = 0; index < data.length; index++) { %>
 
 <ul class="match">
-  <div>
+
     <li class="flexUser">
       <img class="avatar" src='.<%= data[index].storedAvaGamer %>' alt="Gamer Avatar">
       <span><%= data[index].username %></span>
@@ -71,7 +70,6 @@
         </li>
       </ul>
     </li>
-  </div>
 </ul>
 <% } %>
 
