@@ -41,7 +41,7 @@ function upImg() {
     imgTag.src = URL.createObjectURL(event.target.files[0]);
     imgTag.onload = function checkImg() {
         // goodCheck()
-        URL.revokeObjectURL(imgTag.src) // free memory 
+        URL.revokeObjectURL(imgTag.src); // free memory 
         if (imgTag.src.includes('user-astronaut-solid.svg')) {
             imgTag.classList.remove("border-green");
             imgTag.classList.add("border-red");
@@ -49,7 +49,7 @@ function upImg() {
             inputImg.classList.add("border-red");
             btnUpImg.classList.remove("border-green");
             btnUpImg.classList.add("border-red");
-            goodCheck()
+            goodCheck();
         } else {
             imgTag.classList.remove("border-red");
             imgTag.classList.add("border-green");
@@ -57,10 +57,10 @@ function upImg() {
             inputImg.classList.add("border-green");
             btnUpImg.classList.remove("border-red");
             btnUpImg.classList.add("border-green");
-            goodCheck()
+            goodCheck();
         }
-    }
-};
+    };
+}
 
 function deleteImg() {
     imgTag.classList.remove("border-green");
@@ -81,7 +81,7 @@ function deleteImg() {
         inputImg.setAttribute("accept", "image/*");
     }
 
-};
+}
 
 function check() {
 
