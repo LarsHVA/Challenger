@@ -35,7 +35,6 @@
 </div>
 
 <ul class="match">
-  <div>
     <li class="flexUser">
       <img class="avatar" src='.<%= data[index].storedAvaGamer %>' alt="Gamer Avatar">
       <span><%= data[index].username %></span>
@@ -47,7 +46,7 @@
           <img class="cover" src='<%= data[index].game %>'>
         </li>
         <li>
-          <i class="fas fa-heart"></i><%= data[index].gameName %></a>
+          <i class="fas fa-heart"></i><span><%= data[index].gameName %></span>
         </li>
         <li>
           <i class="fas fa-gamepad"></i>
@@ -65,7 +64,6 @@
         </li>
       </ul>
     </li>
-  </div>
 </ul>
 <% } %>
 <%- include ("./partials/footer") %>
