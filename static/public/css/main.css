@@ -232,18 +232,7 @@ i.fas.fa-file-upload.inputStyle {
 }
 
 /* // */
-input[type="file"]::file-selector-button {
-  border-radius: 0.5rem;
-  border: none;
-  color: blanchedalmond;
-  background: #1f1fff;
-  cursor: pointer;
-  padding: 0.8rem;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  transition: 0.5s;
-}
+
 button:focus,
 button:hover {
   outline: none;
