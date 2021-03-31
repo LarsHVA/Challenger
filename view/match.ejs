@@ -1,40 +1,52 @@
+
 <%- include ("./partials/head") %>
 <h1>Challengers</h1>
 
-<div class="tags">
-  <a href="/console/gamecube">
-    <i class="fas fa-tag"></i>
-    <span>Gamecube</span>
-  </a>
-  <a href="/console/wii">
-    <i class="fas fa-tag"></i>
-    <span>Wii</span>
-  </a>
-  <a href="/console/switch">
-    <i class="fas fa-tag"></i>
-    <span>Switch</span>
-  </a>
-  <a href="/console/PC">
-    <i class="fas fa-tag"></i>
-    <span>PC</span>
-  </a>
-  <a href="/console/xbox">
-    <i class="fas fa-tag"></i>
-    <span>Xbox</span>
-  </a>
-  <a href="/console/playstation">
-    <i class="fas fa-tag"></i>
-    <span>Playstation</span>
-  </a>
-</div>
 
-<% for (var index = 0; index < data.length; index++) { %>
+  <button type="button" name="filteren" class="verbergButton" >Verberg filters</button>
+
+  <div class="filters">
+
+    <a href="/console/gamecube">
+      <i class="fas fa-tag"></i>
+      <span>Gamecube</span>
+    </a>
+    <a href="/console/wii">
+      <i class="fas fa-tag"></i>
+      <span>Wii</span>
+    </a>
+    <a href="/console/switch">
+      <i class="fas fa-tag"></i>
+      <span>Switch</span>
+    </a>
+
+    <a href="/console/PC">
+      <i class="fas fa-tag"></i>
+      <span>PC</span>
+    </a>
+    <a href="/console/xbox">
+      <i class="fas fa-tag"></i>
+      <span>Xbox</span>
+    </a>
+    <a href="/console/playstation">
+      <i class="fas fa-tag"></i>
+      <span>Playstation</span>
+    </a>
+  </div>
+
+  <div class="info">
+      <h2> <%-messages.info%></h2>
+  </div>
+
+  <% for (var index = 0; index < data.length; index++) { %>
+
 
 <div class="info">
   <h2> <%-messages.info%></h2>
 </div>
 
 <ul class="match">
+  <div>
     <li class="flexUser">
       <img class="avatar" src='.<%= data[index].storedAvaGamer %>' alt="Gamer Avatar">
       <span><%= data[index].username %></span>
@@ -46,7 +58,7 @@
           <img class="cover" src='<%= data[index].game %>'>
         </li>
         <li>
-          <i class="fas fa-heart"></i><span><%= data[index].gameName %></span>
+          <i class="fas fa-heart"></i><%= data[index].gameName %></a>
         </li>
         <li>
           <i class="fas fa-gamepad"></i>
@@ -64,6 +76,8 @@
         </li>
       </ul>
     </li>
+  </div>
 </ul>
 <% } %>
+
 <%- include ("./partials/footer") %>

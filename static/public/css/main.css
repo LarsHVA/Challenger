@@ -423,6 +423,27 @@ img.avatar {
   font-size: 20px;
 }
 
+/*filters*/
+div.filters {
+  display: contents;
+}
+
+div.filters.close {
+  display: none;
+  overflow: scroll;
+}
+
+button.verbergButton {
+  color:black;
+  background-color: transparent;
+  border-style: none;
+  height: auto;
+  padding: 0 0 0 1px;
+  text-align: left;
+  text-decoration: underline;
+}
+
+
 footer {
   margin-top: 0.5em;
 }
