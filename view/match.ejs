@@ -3,6 +3,7 @@
 <h1>Challengers</h1>
 
 
+
   <button type="button" name="filteren" class="verbergButton" >Verberg filters</button>
 
   <div class="filters">
@@ -31,6 +32,10 @@
       <i class="fas fa-tag"></i>
       <span>Playstation</span>
     </a>
+  </div>
+
+  <div class="succes hidden">
+    <p><%-messages.alert%></p>
   </div>
 
   <div class="info">
@@ -65,7 +70,7 @@
         <li>
           <form method="POST" action="/challenge">
             <input type="hidden" name="email" value="<%= data[index].email %>">
-            <button type="submit">uitdagen</button>
+            <button class="challengeKnop" type="submit">uitdagen</button>
           </form>
         </li>
       </ul>

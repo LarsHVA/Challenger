@@ -423,6 +423,18 @@ img.avatar {
   font-size: 20px;
 }
 
+/* popup */
+.succes {
+  background-color: #C8F9C8;
+  border: .1em solid #91F291;
+  border-radius: 10px;
+  padding: .75em;
+}
+
+.hidden {
+  display: none;
+}
+
 /*filters*/
 div.filters {
   display: contents;

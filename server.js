@@ -109,9 +109,8 @@ app.use('*', saveLocal);
 // Show matching accounts
 app.get('/', checkAuthenticated, async (req, res) => {
   const dataUser = await users.find();
-  res.render('match', {
-    data: dataUser
-  });
+  req.flash('alert', 'Succesvol uitgedaagd!');
+  res.render('match', {data: dataUser});
 });
 
 // Login
