@@ -109,7 +109,6 @@ app.use('*', saveLocal);
 // Show matching accounts
 app.get('/', checkAuthenticated, async (req, res) => {
   const dataUser = await users.find();
-  req.flash('alert', 'Succesvol uitgedaagd!');
   res.render('match', {data: dataUser});
 });
 
@@ -152,7 +151,8 @@ app.post('/challenge', async (req, res) => {
       }
     });
 
-    res.redirect('../login');
+    res.render('challenge');
+
   } catch (err) {
     console.log(err);
     res.status(500).send();

@@ -431,10 +431,6 @@ img.avatar {
   padding: .75em;
 }
 
-.hidden {
-  display: none;
-}
-
 /*filters*/
 div.filters {
   display: contents;
